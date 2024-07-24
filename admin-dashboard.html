@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="admin-dashboard">
+        <aside id="side-nav">
+            <h2>Admin Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="#overview" data-section="overview">Overview</a></li>
+                    <li><a href="#approve-members" data-section="approve-members">Approve Members</a></li>
+                    <li><a href="#add-organization" data-section="add-organization">Add Organization</a></li>
+                    <li><a href="#view-progress" data-section="view-progress">View Member Progress</a></li>
+                    <li><a href="#delete-members" data-section="delete-members">Delete Members</a></li>
+                    <li><button id="logout-btn">Logout</button></li>
+                </ul>
+            </nav>
+        </aside>
+        <main id="main-content">
+            <section id="overview" class="content-section active">
+                <h2>Overview</h2>
+                <div class="chart-container">
+                    <canvas id="tasksChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="membersChart"></canvas>
+                </div>
+            </section>
+            <section id="approve-members" class="content-section">
+                <h2>Approve Member Registrations</h2>
+                <ul id="pending-registrations">
+                    <!-- Pending registrations will be listed here -->
+                </ul>
+            </section>
+            <section id="add-organization" class="content-section">
+                <h2>Add Organization</h2>
+                <form id="addOrganizationForm">
+                    <input type="text" id="newOrganization" placeholder="Organization Name" required><br>
+                    <button type="submit">Add Organization</button>
+                </form>
+            </section>
+            <section id="view-progress" class="content-section">
+                <h2>View Member Progress</h2>
+                <ul id="member-progress">
+                    <!-- Member progress will be listed here -->
+                </ul>
+            </section>
+            <section id="delete-members" class="content-section">
+                <h2>Delete Members</h2>
+                <ul id="delete-members-list">
+                    <!-- Members to delete will be listed here -->
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin-script.js"></script>
+</body>
+</html>
