@@ -47,6 +47,8 @@ input, select {
 #task-list {
     list-style: none;
     padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 #task-list li {
@@ -66,7 +68,8 @@ input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-/* Admin  */
+
+/* Admin */
 
 body {
     font-family: Arial, sans-serif;
@@ -139,14 +142,118 @@ body {
     margin-bottom: 20px;
 }
 
-form {
+/* Add these to the existing styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f4f4f4;
+}
+
+#app {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+#auth-forms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#auth-forms form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#auth-forms input, #auth-forms select, #auth-forms button {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#task-section {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-input, button {
+#task-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
     padding: 10px;
-    margin: 5px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#task-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#add-task-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#task-list {
+    list-style: none;
+    padding: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-item.completed {
+    text-decoration: line-through;
+    background: #e0ffe0;
+}
+
+.task-actions {
+    display: flex;
+    align-items: center;
+}
+
+.task-actions button, .task-actions input[type="checkbox"] {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.task-actions input[type="text"] {
+    padding: 5px;
+    margin-left: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }

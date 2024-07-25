@@ -9,56 +9,43 @@
 <body>
     <div id="app">
         <h1>To-Do App</h1>
-        <div id="auth">
-            <button id="login-btn">Login</button>
-            <button id="register-btn">Register</button>
-        </div>
-
-        <!-- Registration Form -->
-        <div id="registration-form" style="display: none;">
-            <h2>Register</h2>
-            <form id="registerForm">
-                <input type="text" id="fullName" placeholder="Full Name" required><br>
-                <input type="email" id="email" placeholder="Email" required><br>
-                <input type="tel" id="contactNumber" placeholder="Contact Number" required><br>
-                <input type="password" id="password" placeholder="Password" required><br>
-                <input type="password" id="confirmPassword" placeholder="Confirm Password" required><br>
-                <input type="file" id="profilePicture" accept="image/*"><br>
-                <select id="registrationType" required>
-                    <option value="">Register As</option>
+        <div id="auth-forms">
+            <div id="auth-buttons">
+                <button id="show-login">Login</button>
+                <button id="show-register">Register</button>
+            </div>
+            <form id="login-form" style="display: none;">
+                <h2>Login</h2>
+                <input type="email" id="login-email" placeholder="Email" required><br>
+                <input type="password" id="login-password" placeholder="Password" required><br>
+                <button type="submit">Login</button>
+            </form>
+            <form id="registration-form" style="display: none;">
+                <h2>Register</h2>
+                <input type="text" id="reg-fullname" placeholder="Full Name" required><br>
+                <input type="email" id="reg-email" placeholder="Email" required><br>
+                <input type="password" id="reg-password" placeholder="Password" required><br>
+                <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required><br>
+                <input type="text" id="reg-contact" placeholder="Contact Number" required><br>
+                <select id="reg-type" required>
+                    <option value="">Select Type</option>
                     <option value="individual">Individual</option>
                     <option value="organization">Organization</option>
                 </select><br>
-                <div id="organizationFields" style="display: none;">
-                    <select id="organization">
-                        <option value="">Select Organization</option>
-                        <!-- I will update this to populate from db(local storage) -->
-                    </select><br>
-                    <select id="userRole" required>
-                        <option value="">Select Role</option>
-                        <option value="admin">Admin</option>
-                        <option value="regular">Regular User</option>
-                    </select><br>
-                </div>
+                <select id="reg-role" style="display:none;">
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="regular">Regular User</option>
+                </select><br>
                 <button type="submit">Register</button>
             </form>
         </div>
-
-        <!-- Login Form -->
-        <div id="login-form" style="display: none;">
-            <h2>Login</h2>
-            <form id="loginForm">
-                <input type="email" id="loginEmail" placeholder="Email" required><br>
-                <input type="password" id="loginPassword" placeholder="Password" required><br>
-                <button type="submit">Login</button>
-            </form>
-        </div>
-
-        <div id="tasks" style="display: none;">
-            <h2>Your Tasks</h2>
+        <div id="task-section" style="display:none;">
+            <div id="task-form">
+                <input type="text" id="task-input" placeholder="Enter your task">
+                <button id="add-task-btn">Add Task</button>
+            </div>
             <ul id="task-list"></ul>
-            <input type="text" id="new-task" placeholder="New Task">
-            <button id="add-task-btn">Add Task</button>
         </div>
     </div>
     <script src="js/script.js"></script>
