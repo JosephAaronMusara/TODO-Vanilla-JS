@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const user = users.find(user => user.email === email && user.password === password);
 
-        if (user) {
+        if (user && (user.role === 'regular')) {
             currentUserId = user.id;
             alert('Login successful');
             authButtons.style.display = 'none';
@@ -95,6 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
             registrationForm.style.display = 'none';
             taskSection.style.display = 'block';
             renderTasks();
+        }else if (user && (user.role === 'admin')) {
+            currentUserId = user.id;
+            alert('Login successful');
+            authButtons.style.display = 'none';
+            loginForm.style.display = 'none';
+            registrationForm.style.display = 'none';
+            window.location.href = 'admin-dashboard.html';
         } else {
             alert('Invalid credentials');
         }
@@ -197,3 +204,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+//tostify
