@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             taskList.appendChild(taskItem);
         });
     };
+    
 
     // Handle registration form submission
     registrationForm.addEventListener('submit', (e) => {
@@ -61,9 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = document.getElementById('reg-confirm-password').value.trim();
         const contact = document.getElementById('reg-contact').value.trim();
         const type = document.getElementById('reg-type').value;
-        //const approved = (type === 'organization' && role ==='regular') ? false : true;
-        const approved = false;
         const role = type === 'organization' ? document.getElementById('reg-role').value : 'regular';
+        const approved = (type === 'organization' && role ==='regular') ? false : true;
+        console.log(approved);
 
         if (password !== confirmPassword) {
             alert('Passwords do not match');
