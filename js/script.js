@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             taskList.appendChild(taskItem);
         });
     };
-    
 
     // Handle registration form submission
     registrationForm.addEventListener('submit', (e) => {
@@ -125,21 +124,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-// Show login form
-showLoginButton.addEventListener('click', () => {
-    loginForm.style.display = 'block';
-    registrationForm.style.display = 'none';
-    showLoginButton.style.display = 'none'; 
-    showRegisterButton.style.display = 'block';
-});
+    // Show login form
+    showLoginButton.addEventListener('click', () => {
+        loginForm.style.display = 'block';
+        registrationForm.style.display = 'none';
+        showLoginButton.style.display = 'none'; 
+        showRegisterButton.style.display = 'block';
+    });
 
-// Show registration form
-showRegisterButton.addEventListener('click', () => {
-    registrationForm.style.display = 'block';
-    loginForm.style.display = 'none';
-    showRegisterButton.style.display = 'none';
-    showLoginButton.style.display = 'block';
-});
+    // Show registration form
+    showRegisterButton.addEventListener('click', () => {
+        registrationForm.style.display = 'block';
+        loginForm.style.display = 'none';
+        showRegisterButton.style.display = 'none';
+        showLoginButton.style.display = 'block';
+    });
 
 
     // Add new task
@@ -218,5 +217,3 @@ showRegisterButton.addEventListener('click', () => {
         }
     });
 });
-
-//tostify
