@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
 
-    // Dummy User ID, replace with actual user ID from backend after login
+
     let currentUserId = null;
 
     // Load tasks from local storage
@@ -61,19 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = document.getElementById('reg-confirm-password').value.trim();
         const contact = document.getElementById('reg-contact').value.trim();
         const type = document.getElementById('reg-type').value;
+        //const approved = (type === 'organization' && role ==='regular') ? false : true;
+        const approved = false;
         const role = type === 'organization' ? document.getElementById('reg-role').value : 'regular';
 
         if (password !== confirmPassword) {
             alert('Passwords do not match');
             return;
         }
-
         // Save user data in local storage
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        users.push({ fullName, email, password, contact, type, role, id: Date.now() });
+        users.push({ fullName, email, password, contact, type, role,approved, id: Date.now() });
         localStorage.setItem('users', JSON.stringify(users));
 
-        alert('Registration successful');
+        alert('Registration successful! Proceed to login or wait for approval if you are an organization member');
         registrationForm.reset();
     });
 
@@ -87,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const users = JSON.parse(localStorage.getItem('users')) || [];
         const user = users.find(user => user.email === email && user.password === password);
 
-        if (user && (user.role === 'regular')) {
+        if (user && (user.role === 'regular') && user.approved) {
             currentUserId = user.id;
             alert('Login successful');
             authButtons.style.display = 'none';
@@ -95,6 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
             registrationForm.style.display = 'none';
             taskSection.style.display = 'block';
             renderTasks();
+        }else if (user && (user.type === 'individual')) {
+            currentUserId = user.id;
+            alert('Login successful');
+            authButtons.style.display = 'none';
+            loginForm.style.display = 'none';
+            registrationForm.style.display = 'none';
+            taskSection.style.display = 'block';
         }else if (user && (user.role === 'admin')) {
             currentUserId = user.id;
             alert('Login successful');
@@ -103,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             registrationForm.style.display = 'none';
             window.location.href = 'admin-dashboard.html';
         } else {
-            alert('Invalid credentials');
+            alert('Invalid credentials or account not approved yet');
         }
     });
 
@@ -116,17 +124,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Show login form
-    showLoginButton.addEventListener('click', () => {
-        loginForm.style.display = 'block';
-        registrationForm.style.display = 'none';
-    });
+// Show login form
+showLoginButton.addEventListener('click', () => {
+    loginForm.style.display = 'block';
+    registrationForm.style.display = 'none';
+    showLoginButton.style.display = 'none'; 
+    showRegisterButton.style.display = 'block';
+});
 
-    // Show registration form
-    showRegisterButton.addEventListener('click', () => {
-        registrationForm.style.display = 'block';
-        loginForm.style.display = 'none';
-    });
+// Show registration form
+showRegisterButton.addEventListener('click', () => {
+    registrationForm.style.display = 'block';
+    loginForm.style.display = 'none';
+    showRegisterButton.style.display = 'none';
+    showLoginButton.style.display = 'block';
+});
+
 
     // Add new task
     addTaskBtn.addEventListener('click', () => {

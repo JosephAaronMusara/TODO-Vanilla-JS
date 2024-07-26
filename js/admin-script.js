@@ -25,34 +25,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Dummy data for pending registrations, organizations, and members
-    const pendingRegistrations = [
-        { id: 1, name: 'Uncle Joe', email: 'uncle@asap.com' },
-        { id: 2, name: 'Joe Aaron', email: 'jose@aaron.com' }
-    ];
-
-    const memberProgress = [
-        { id: 1, name: 'Uncle Joe', progress: '75%' },
-        { id: 2, name: 'Joe Aaron', progress: '50%' }
-    ];
-
-    const members = [
-        { id: 1, name: 'Uncle Joe' },
-        { id: 2, name: 'Joe Aaron' }
-    ];
+    // data for pending registrations, organizations, and members from rocal storage
+    const usersKey = 'users';
+    const tasksKey = 'tasks';
+    const users = JSON.parse(localStorage.getItem(usersKey)) || [];
+    const tasks = JSON.parse(localStorage.getItem(tasksKey)) || [];
 
     const pendingRegistrationsList = document.getElementById('pending-registrations');
     const memberProgressList = document.getElementById('member-progress');
     const deleteMembersList = document.getElementById('delete-members-list');
+    const rankedMembersList = document.getElementById('ranked-members');
+    const assignTaskForm = document.getElementById('assignTaskForm');
 
     // Populate pending registrations
-    pendingRegistrations.forEach(registration => {
+    users.filter(user => user.type === 'organization' && !user.approved).forEach(user => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${registration.name} (${registration.email})`;
+        listItem.textContent = `${user.email}`;
         const approveBtn = document.createElement('button');
         approveBtn.textContent = 'Approve';
         approveBtn.addEventListener('click', function () {
-            // Handle approval logic here
+            user.approved = true;
+            localStorage.setItem(usersKey, JSON.stringify(users));
             listItem.remove();
         });
         listItem.appendChild(approveBtn);
@@ -60,37 +53,92 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Populate member progress
-    memberProgress.forEach(member => {
+    users.filter(user => user.approved).forEach(user => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${member.name} - Progress: ${member.progress}`;
+        listItem.textContent = user.email;
+        listItem.addEventListener('click', function () {
+            assignTaskForm.style.display = 'block';
+            document.getElementById('assignTaskInput').setAttribute('data-email', user.fullname);
+            renderUserTasks(user.email);
+        });
         memberProgressList.appendChild(listItem);
     });
 
     // Populate delete members
-    members.forEach(member => {
+    users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
         const listItem = document.createElement('li');
-        listItem.textContent = member.name;
+        listItem.textContent = user.email;
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
         deleteBtn.addEventListener('click', function () {
-            // Handle delete logic here
+            users.splice(users.indexOf(user), 1);
+            localStorage.setItem(usersKey, JSON.stringify(users));
             listItem.remove();
         });
         listItem.appendChild(deleteBtn);
         deleteMembersList.appendChild(listItem);
     });
 
-    // Handle adding a new organization
-    document.getElementById('addOrganizationForm').addEventListener('submit', function (event) {
+        // Handle assigning a task to a user
+    assignTaskForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        const newOrganizationName = document.getElementById('newOrganization').value.trim();
-        if (newOrganizationName) {
-            // Handle adding organization logic here
-            alert(`Organization "${newOrganizationName}" added!`);
-            document.getElementById('newOrganization').value = '';
-        }
+        const taskInput = document.getElementById('assignTaskInput');
+        const email = taskInput.getAttribute('data-email');
+        const task = taskInput.value;
+    
+        tasks.push({ task, addedBy: 'admin', assignedTo: email, dateAdded: new Date().toISOString(), completed: false, dateCompleted: null });
+        localStorage.setItem(tasksKey, JSON.stringify(tasks));
+        taskInput.value = '';
+        renderUserTasks(email);
     });
+    
+        // Render tasks for a specific user
+        function renderUserTasks(email) {
+            const userTasks = tasks.filter(t => t.assignedTo === email);
+            const taskList = document.createElement('ul');
+            taskList.innerHTML = '';
+            userTasks.forEach(task => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${task.task} - ${task.completed ? 'Completed' : 'Pending'}`;
+                taskList.appendChild(listItem);
+            });
+            memberProgressList.appendChild(taskList);
+        }
+    
+        // Populate ranked members based on completed tasks percentage
+        function rankMembers() {
+            const memberRanks = users.filter(user => user.approved).map(user => {
+                const userTasks = tasks.filter(t => t.assignedTo === user.email);
+                const completedTasks = userTasks.filter(t => t.completed).length;
+                const taskCompletionPercentage = userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 0;
+                return { email: user.email, taskCompletionPercentage };
+            });
+    
+            memberRanks.sort((a, b) => b.taskCompletionPercentage - a.taskCompletionPercentage);
+            memberRanks.forEach(member => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${member.email} - ${member.taskCompletionPercentage.toFixed(2)}% completed tasks`;
+                rankedMembersList.appendChild(listItem);
+            });
+        }
+        rankMembers();
+    
+        // Populate delete members
+        users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
+            const listItem = document.createElement('li');
+            listItem.textContent = user.email;
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', function () {
+                users.splice(users.indexOf(user), 1);
+                localStorage.setItem(usersKey, JSON.stringify(users));
+                listItem.remove();
+            });
+            listItem.appendChild(deleteBtn);
+            deleteMembersList.appendChild(listItem);
+        });
 
+    //To be removed: Told not to use libraries
     // Dummy data for charts
     const tasksData = {
         labels: ['Completed', 'Pending', 'Overdue'],
