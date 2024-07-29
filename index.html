@@ -24,19 +24,21 @@
                 <h2>Register</h2>
                 <input type="text" id="reg-fullname" placeholder="Full Name" required><br>
                 <input type="email" id="reg-email" placeholder="Email" required><br>
+                <input type="text" id="reg-contact" placeholder="Contact Number" required><br>
                 <input type="password" id="reg-password" placeholder="Password" required><br>
                 <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required><br>
-                <input type="text" id="reg-contact" placeholder="Contact Number" required><br>
                 <select id="reg-type" required>
                     <option value="">Select Type</option>
                     <option value="individual">Individual</option>
                     <option value="organization">Organization</option>
                 </select><br>
-                <select id="reg-role" style="display:none;">
+                <!-- <select id="reg-role" style="display:none;">
                     <option value="">Select Role</option>
                     <option value="admin">Admin</option>
                     <option value="regular">Regular User</option>
-                </select><br>
+                </select><br> -->
+                <input type="text" id="reg-role" value="regular" style="display:none;" readonly><br>
+
                 <button type="submit">Register</button>
             </form>
         </div>

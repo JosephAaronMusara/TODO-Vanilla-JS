@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     let currentUserId = null;
+    let loggedInUser = null;
 
     // Load tasks from local storage
     const loadTasks = () => {
@@ -57,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const fullName = document.getElementById('reg-fullname').value.trim();
         const email = document.getElementById('reg-email').value.trim();
-        const password = document.getElementById('reg-password').value.trim();
-        const confirmPassword = document.getElementById('reg-confirm-password').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const confirmPassword = document.getElementById('reg-confirm-password').value;
         const contact = document.getElementById('reg-contact').value.trim();
         const type = document.getElementById('reg-type').value;
         const role = type === 'organization' ? document.getElementById('reg-role').value : 'regular';
@@ -105,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
             taskSection.style.display = 'block';
         }else if (user && (user.role === 'admin')) {
             currentUserId = user.id;
+            localStorage.setItem('loggedInUser', JSON.stringify('admin'));//auth feedback
             alert('Login successful');
             authButtons.style.display = 'none';
             loginForm.style.display = 'none';

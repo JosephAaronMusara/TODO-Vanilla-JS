@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (loggedInUser !== 'admin') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
     <div id="admin-dashboard">
         <aside id="side-nav">
             <h2 style="color: black;">Admin Dashboard</h2>
