@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = 'index.html';
     });
 
-    // Handle navigation
+    // Handle navigation --working
     const navLinks = document.querySelectorAll('#side-nav nav ul li a');
     const sections = document.querySelectorAll('.content-section');
 
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // data for pending registrations, organizations, and members from rocal storage
+    // data for pending registrations, organizations, and members from rocal storage --working
     const usersKey = 'users';
     const tasksKey = 'tasks';
     const users = JSON.parse(localStorage.getItem(usersKey)) || [];
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const rankedMembersList = document.getElementById('ranked-members');
     const assignTaskForm = document.getElementById('assignTaskForm');
 
-    // Populate pending registrations
+    // Handle pending registrations --working
     users.filter(user => user.type === 'organization' && !user.approved).forEach(user => {
         const listItem = document.createElement('li');
         listItem.textContent = `${user.email}`;
@@ -52,34 +52,32 @@ document.addEventListener('DOMContentLoaded', function () {
         pendingRegistrationsList.appendChild(listItem);
     });
 
-    // Populate member progress
+    // Render tasks for a specific user
+    function renderUserTasks(email) {
+        const userTasks = tasks.filter(t => t.assignedTo === email);
+        const taskList = document.createElement('ul');
+        taskList.innerHTML = '';
+        userTasks.forEach(task => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${task.task} - ${task.completed ? 'Completed' : 'Pending'}`;
+            taskList.appendChild(listItem);
+        });
+        memberProgressList.appendChild(taskList);
+    }
+
+    //Assign tasks 
     users.filter(user => user.approved).forEach(user => {
         const listItem = document.createElement('li');
-        listItem.textContent = user.email;
+        listItem.textContent = `${user.fullName} - ${user.email}`;
         listItem.addEventListener('click', function () {
             assignTaskForm.style.display = 'block';
-            document.getElementById('assignTaskInput').setAttribute('data-email', user.fullname);
+            document.getElementById('assignTaskInput').setAttribute('data-email', user.fullName);
             renderUserTasks(user.email);
         });
         memberProgressList.appendChild(listItem);
     });
 
-    // Populate delete members
-    users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
-        const listItem = document.createElement('li');
-        listItem.textContent = user.email;
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.addEventListener('click', function () {
-            users.splice(users.indexOf(user), 1);
-            localStorage.setItem(usersKey, JSON.stringify(users));
-            listItem.remove();
-        });
-        listItem.appendChild(deleteBtn);
-        deleteMembersList.appendChild(listItem);
-    });
-
-        // Handle assigning a task to a user
+    //assigning a task to a user --logic to be reviewed again
     assignTaskForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const taskInput = document.getElementById('assignTaskInput');
@@ -91,55 +89,43 @@ document.addEventListener('DOMContentLoaded', function () {
         taskInput.value = '';
         renderUserTasks(email);
     });
-    
-        // Render tasks for a specific user
-        function renderUserTasks(email) {
-            const userTasks = tasks.filter(t => t.assignedTo === email);
-            const taskList = document.createElement('ul');
-            taskList.innerHTML = '';
-            userTasks.forEach(task => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${task.task} - ${task.completed ? 'Completed' : 'Pending'}`;
-                taskList.appendChild(listItem);
-            });
-            memberProgressList.appendChild(taskList);
-        }
-    
-        // Populate ranked members based on completed tasks percentage
-        function rankMembers() {
-            const memberRanks = users.filter(user => user.approved).map(user => {
-                const userTasks = tasks.filter(t => t.assignedTo === user.email);
-                const completedTasks = userTasks.filter(t => t.completed).length;
-                const taskCompletionPercentage = userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 0;
-                return { email: user.email, taskCompletionPercentage };
-            });
-    
-            memberRanks.sort((a, b) => b.taskCompletionPercentage - a.taskCompletionPercentage);
-            memberRanks.forEach(member => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${member.email} - ${member.taskCompletionPercentage.toFixed(2)}% completed tasks`;
-                rankedMembersList.appendChild(listItem);
-            });
-        }
-        rankMembers();
-    
-        // Populate delete members
-        users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
-            const listItem = document.createElement('li');
-            listItem.textContent = user.email;
-            const deleteBtn = document.createElement('button');
-            deleteBtn.textContent = 'Delete';
-            deleteBtn.addEventListener('click', function () {
-                users.splice(users.indexOf(user), 1);
-                localStorage.setItem(usersKey, JSON.stringify(users));
-                listItem.remove();
-            });
-            listItem.appendChild(deleteBtn);
-            deleteMembersList.appendChild(listItem);
+            
+
+    //delete members --working
+    users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${user.fullName} - ${user.email}`;
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', function () {
+            users.splice(users.indexOf(user), 1);
+            localStorage.setItem(usersKey, JSON.stringify(users));
+            listItem.remove();
+        });
+        listItem.appendChild(deleteBtn);
+        deleteMembersList.appendChild(listItem);
+    });
+
+    // rank members based on completed tasks % -- working partially
+    function rankMembers() {
+        const memberRanks = users.filter(user => (user.approved)&&user.role==='regular' && user.type==='organization').map(user => {
+            const userTasks = tasks.filter(t => t.userId === user.id);
+            const completedTasks = userTasks.filter(t => t.completed).length;
+            const taskCompletionPercentage = userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 0;
+            return { fullName: user.fullName, taskCompletionPercentage };
         });
 
-    //To be removed: Told not to use libraries
-    // Dummy data for charts
+        memberRanks.sort((a, b) => b.taskCompletionPercentage - a.taskCompletionPercentage);
+        memberRanks.forEach(member => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${member.fullName} - ${member.taskCompletionPercentage.toFixed(2)}% completed tasks`;
+            rankedMembersList.appendChild(listItem);
+        });
+    }
+    rankMembers();
+    
+    //To be removed: Told not to use libraries --working
+    // Dummy data 4 charts
     const tasksData = {
         labels: ['Completed', 'Pending', 'Overdue'],
         datasets: [{
