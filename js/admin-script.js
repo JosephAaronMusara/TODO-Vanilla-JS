@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     rankMembers();
     
-    //To be removed: Told not to use libraries --working
+    //To use real data soon -- working
     // Dummy data 4 charts
     const tasksData = {
         labels: ['Completed', 'Pending', 'Overdue'],
