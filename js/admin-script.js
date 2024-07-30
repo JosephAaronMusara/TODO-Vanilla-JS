@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    //table variables:
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
     // data for pending registrations, organizations, and members from rocal storage --working
     const usersKey = 'users';
     const tasksKey = 'tasks';
@@ -117,11 +122,36 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         memberRanks.sort((a, b) => b.taskCompletionPercentage - a.taskCompletionPercentage);
-        memberRanks.forEach(member => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${member.fullName} - ${member.taskCompletionPercentage.toFixed(2)}% completed tasks`;
-            rankedMembersList.appendChild(listItem);
-        });
+            const headersRank = ['Full Name', 'Task Completion (%)'];
+            headersRank.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            const tbody = document.createElement('tbody');
+
+            // tbl data
+            memberRanks.forEach(member => {
+                const row = document.createElement('tr');
+
+                const fullNameCell = document.createElement('td');
+                fullNameCell.textContent = member.fullName;
+
+                const taskCompletionCell = document.createElement('td');
+                taskCompletionCell.textContent = `${member.taskCompletionPercentage.toFixed(2)}%`;
+
+                row.appendChild(fullNameCell);
+                row.appendChild(taskCompletionCell);
+
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            rankedMembersList.appendChild(table);
+
     }
     rankMembers();
     
