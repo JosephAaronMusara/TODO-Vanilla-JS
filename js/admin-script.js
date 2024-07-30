@@ -30,6 +30,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const table = document.createElement('table');
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
+    const tbody = document.createElement('tbody');
+    const tbodyDel = document.createElement('tbody');
+
+
+    function createTable(first_header,second_header){
+        const headersRank = [`${first_header}`, `${second_header}`];
+        headersRank.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        tbody;
+    }
 
     // data for pending registrations, organizations, and members from rocal storage --working
     const usersKey = 'users';
@@ -72,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     //Assign tasks 
-    users.filter(user => user.approved).forEach(user => {
+    users.filter(user => user.approved && user.role=='regular' && user.type=='organization').forEach(user => {
         const listItem = document.createElement('li');
         listItem.textContent = `${user.fullName} - ${user.email}`;
         listItem.addEventListener('click', function () {
@@ -98,19 +114,62 @@ document.addEventListener('DOMContentLoaded', function () {
             
 
     //delete members --working
-    users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${user.fullName} - ${user.email}`;
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.addEventListener('click', function () {
-            users.splice(users.indexOf(user), 1);
-            localStorage.setItem(usersKey, JSON.stringify(users));
-            listItem.remove();
-        });
-        listItem.appendChild(deleteBtn);
-        deleteMembersList.appendChild(listItem);
+    // users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
+    //     const listItem = document.createElement('li');
+    //     listItem.textContent = `${user.fullName} - ${user.email}`;
+    //     const deleteBtn = document.createElement('button');
+    //     deleteBtn.textContent = 'Delete';
+    //     deleteBtn.addEventListener('click', function () {
+    //         users.splice(users.indexOf(user), 1);
+    //         localStorage.setItem(usersKey, JSON.stringify(users));
+    //         listItem.remove();
+    //     });
+    //     listItem.appendChild(deleteBtn);
+    //     deleteMembersList.appendChild(listItem);
+    // });
+
+
+    // Assuming deleteMembersTable is the table element where you want to display the users
+
+// Create table headers
+const headersDel = ['Full Name', 'Email', 'Actions'];
+headersDel.forEach(headerText => {
+    const th = document.createElement('th');
+    th.textContent = headerText;
+    headerRow.appendChild(th);
+});
+thead.appendChild(headerRow);
+deleteMembersList.appendChild(thead);
+deleteMembersList.appendChild(tbodyDel);
+
+users.filter(user => user.type === 'organization' && user.role === 'regular').forEach(user => {
+    const row = document.createElement('tr');
+    
+    // Full Name
+    const nameCell = document.createElement('td');
+    nameCell.textContent = user.fullName;
+    row.appendChild(nameCell);
+    
+    // Email
+    const emailCell = document.createElement('td');
+    emailCell.textContent = user.email;
+    row.appendChild(emailCell);
+    
+    // Actions
+    const actionsCell = document.createElement('td');
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', function () {
+        users.splice(users.indexOf(user), 1);
+        localStorage.setItem(usersKey, JSON.stringify(users));
+        row.remove();
     });
+    actionsCell.appendChild(deleteBtn);
+    row.appendChild(actionsCell);
+
+    tbodyDel.appendChild(row);
+});
+
 
     // rank members based on completed tasks % -- working partially
     function rankMembers() {
@@ -122,17 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         memberRanks.sort((a, b) => b.taskCompletionPercentage - a.taskCompletionPercentage);
-            const headersRank = ['Full Name', 'Task Completion (%)'];
-            headersRank.forEach(headerText => {
-                const th = document.createElement('th');
-                th.textContent = headerText;
-                headerRow.appendChild(th);
-            });
-
-            thead.appendChild(headerRow);
-            table.appendChild(thead);
-            const tbody = document.createElement('tbody');
-
+        createTable('Full Name','Task Completion %');
             // tbl data
             memberRanks.forEach(member => {
                 const row = document.createElement('tr');
