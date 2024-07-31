@@ -19,15 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
     let loggedInUser = null;
 
     // Load tasks from local storage
-    const loadTasks = () => {
-        const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        return tasks.filter(task => task.userId === currentUserId);
-    };
 
-    // Save tasks to local storage
+    const loadTasks = () => {
+        const tasks = JSON.parse(localStorage.getItem('userTasks')) || {};
+        return tasks[currentUserId] || [];
+      };
+      
+
+
+    // Save tasks to local storage taraaaaaaaaaaaaa as seperate, with ID as key
     const saveTasks = (tasks) => {
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    };
+        const userTasks = JSON.parse(localStorage.getItem('userTasks')) || {};
+        userTasks[currentUserId] = tasks;
+        localStorage.setItem('userTasks', JSON.stringify(userTasks));
+      };
+      
+
 
     // Render tasks
     const renderTasks = () => {
@@ -104,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginForm.style.display = 'none';
             registrationForm.style.display = 'none';
             taskSection.style.display = 'block';
+            renderTasks();
         }else if (user && (user.role === 'admin')) {
             currentUserId = user.id;
             localStorage.setItem('loggedInUser', JSON.stringify('admin'));//auth feedback
