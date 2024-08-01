@@ -262,23 +262,25 @@ body {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
-th {
-    background-color: #007BFF;
-    color: white;
+
+th, td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 2px solid #ddd; 
-}
-td {
-    padding: 12px 15px;
     border-bottom: 1px solid #ddd;
 }
-tr:nth-child(even) {
+
+thead th {
+    background-color: #007BFF;
+    color: white;
+    border-bottom: 2px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-tr:hover {
+tbody tr:hover {
     background-color: #ddd;
 }

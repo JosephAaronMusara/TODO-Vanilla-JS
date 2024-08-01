@@ -41,31 +41,40 @@
             </section>
             <section id="approve-members" class="content-section">
                 <h2>Approve Member Registrations</h2>
-                <ul id="pending-registrations">
-                    <!-- Pending registrations. Who have registered as org, regular members lol  -->
-                </ul>
+                <table id="pending-registrations">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </section>
             <section id="rank-members" class="content-section">
                 <h2>Rank Members</h2>
-                <div >
-                    <table id="ranked-members">
-                        <thead>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Task Completion % </th>
-                            </tr>
-                        </thead>
-                        <tbody class="tbody-rank">
-                            <!-- my tada from js hereeeeeeee -->
-                        </tbody>
-                    </table>
-                </div>
+                <table id="ranked-members">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Task Completion %</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </section>            
             <section id="assign-tasks" class="content-section">
                 <h2>Assign Tasks</h2>
-                <ul id="assign-tasks">
-                <!--I will add more logic here soon-->
-                </ul>
+                <table id="assign-tasks">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
                 <form id="assignTaskForm" style="display: none;">
                     <input type="text" id="assignTaskInput" placeholder="Task for User" required>
                     <button type="submit">Assign Task</button>
