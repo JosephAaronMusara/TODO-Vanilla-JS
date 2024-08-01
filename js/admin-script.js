@@ -165,7 +165,6 @@ document.addEventListener("DOMContentLoaded", function () {
       )
       .map((user) => {
         const userTasks = tasks.filter((t) => t.userId === user.id);//returnig empty array, array with 2 objects, empty array
-        console.log(userTasks);//////////
         const completedTasks = userTasks.filter((t) => t.completed).length;
         const taskCompletionPercentage =
           userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 0;
