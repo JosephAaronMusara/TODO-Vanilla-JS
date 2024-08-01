@@ -74,10 +74,10 @@ document.addEventListener("DOMContentLoaded", function () {
           }`;
           taskList.appendChild(listItem);
       });
-      memberProgressList.appendChild(taskList);
+      assignTasksTable.appendChild(taskList);
   }
 
-  // Assign tasks
+  // Assign tasks display the users acho-----  Working well
   users
       .filter(
           (user) =>
@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
               assignTaskForm.style.display = "block";
               document
                   .getElementById("assignTaskInput")
-                  .setAttribute("data-email", user.fullName);
-              renderUserTasks(user.email);
+                  .setAttribute("data-id", user.id);
+             // renderUserTasks(user.email);
           });
           actionCell.appendChild(assignBtn);
           row.appendChild(actionCell);
@@ -111,19 +111,32 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
   // Assigning a task to a user
+
   assignTaskForm.addEventListener("submit", function (event) {
       event.preventDefault();
       const taskInput = document.getElementById("assignTaskInput");
-      const email = taskInput.getAttribute("data-email");
-      const task = taskInput.value;
+      const userId = taskInput.getAttribute("data-id");//-------
+      const taskText = taskInput.value;
+
+      // Save tasks to local storage taraaaaaaaaaaaaa as seperate, with ID as key
+      const saveTasks = (tasks) => {
+      const userTasks = JSON.parse(localStorage.getItem('userTasks')) || {};
+      userTasks[currentUserId] = tasks;
+      localStorage.setItem('userTasks', JSON.stringify(userTasks));
+
+
+
+    };
 
       tasks.push({
-          task,
-          addedBy: "admin",
-          assignedTo: email,
-          dateAdded: new Date().toISOString(),
-          completed: false,
-          dateCompleted: null,
+        id: Date.now(),
+        text: taskText,
+        dateAdded: new Date().toLocaleString(),
+        addedBy:'admin',
+        dateCompleted: null,
+        completed: false,
+        reason: '',
+        userId: userId
       });
       localStorage.setItem(tasksKey, JSON.stringify(tasks));
       taskInput.value = "";

@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const tasks = JSON.parse(localStorage.getItem('userTasks')) || {};
         return tasks[currentUserId] || [];
       };
-      
-
 
     // Save tasks to local storage taraaaaaaaaaaaaa as seperate, with ID as key
     const saveTasks = (tasks) => {
@@ -160,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: Date.now(),
                 text: taskText,
                 dateAdded: new Date().toLocaleString(),
+                addedBy:'self',
                 dateCompleted: null,
                 completed: false,
                 reason: '',
