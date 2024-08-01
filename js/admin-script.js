@@ -154,9 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
       tbodyDel.appendChild(row);
     });
 
-  // rank members based on completed tasks % -- working partially
+  // rank members based on completed tasks % -- working
   function rankMembers() {
-    //filter--------- tested and works well lol
     const memberRanks = users
       .filter(
         (user) =>
@@ -164,13 +163,12 @@ document.addEventListener("DOMContentLoaded", function () {
           user.role === "regular" &&
           user.type === "organization"
       )
-      //Now checking the map
       .map((user) => {
         const userTasks = tasks.filter((t) => t.userId === user.id);//returnig empty array, array with 2 objects, empty array
         console.log(userTasks);//////////
         const completedTasks = userTasks.filter((t) => t.completed).length;
         const taskCompletionPercentage =
-          userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 10;
+          userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 0;
         return { fullName: user.fullName, taskCompletionPercentage };
       });
 
