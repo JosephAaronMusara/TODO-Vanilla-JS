@@ -139,26 +139,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function renderAssignedTasks() {
         assignTasksTable.innerHTML = "";
-
+    
         createdTasks
             .filter((task) => task.assignedTo)
             .forEach((task) => {
                 const row = document.createElement("tr");
-
+    
                 const taskCell = document.createElement("td");
                 taskCell.textContent = task.text;
                 row.appendChild(taskCell);
-
+    
                 const assignedToCell = document.createElement("td");
-                const assignedUser = users.find((user) => user.id === task.assignedTo);
+                const assignedUser = users.find((user) => {
+                    return String(user.id).trim() === String(task.assignedTo).trim();
+                });                
                 
                 assignedToCell.textContent = assignedUser ? assignedUser.fullName : "N/A";
                 row.appendChild(assignedToCell);
-
+    
                 const dueDateCell = document.createElement("td");
                 dueDateCell.textContent = new Date(task.dueDate).toLocaleString();
                 row.appendChild(dueDateCell);
-
+    
                 const timeRemainingCell = document.createElement("td");
                 const remainingTime = calculateTimeRemaining(task.dueDate);
                 timeRemainingCell.textContent = remainingTime.text;
@@ -166,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     timeRemainingCell.style.color = "red";
                 }
                 row.appendChild(timeRemainingCell);
-
+    
                 const actionCell = document.createElement("td");
                 const completeBtn = document.createElement("button");
                 completeBtn.textContent = "Mark as Completed";
@@ -175,17 +177,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
                     renderAssignedTasks();
                 });
-                if(task.completed){
+                if (task.completed) {
                     completeBtn.disabled = true;
                     completeBtn.textContent = 'Completed';
                     completeBtn.style.backgroundColor = 'green';
-                };
+                }
                 actionCell.appendChild(completeBtn);
                 row.appendChild(actionCell);
-
+    
                 assignTasksTable.appendChild(row);
             });
     }
+    
 
     function calculateTimeRemaining(dueDate) {
         const now = new Date();
