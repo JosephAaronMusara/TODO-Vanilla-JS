@@ -151,6 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const assignedToCell = document.createElement("td");
                 const assignedUser = users.find((user) => user.id === task.assignedTo);
+                
                 assignedToCell.textContent = assignedUser ? assignedUser.fullName : "N/A";
                 row.appendChild(assignedToCell);
 
@@ -174,6 +175,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
                     renderAssignedTasks();
                 });
+                if(task.completed){
+                    completeBtn.disabled = true;
+                    completeBtn.textContent = 'Completed';
+                    completeBtn.style.backgroundColor = 'green';
+                };
                 actionCell.appendChild(completeBtn);
                 row.appendChild(actionCell);
 
