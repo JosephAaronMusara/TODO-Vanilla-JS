@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('task-input');
     const addTaskBtn = document.getElementById('add-task-btn');
     const taskList = document.getElementById('task-list');
+    const dueDateInput = document.getElementById("task-input-due-date");
+
 
 
     let currentUserId = null;
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             taskItem.dataset.id = task.id;
             taskItem.innerHTML = `
-                <span>${task.text} (Added: ${task.dateAdded}, Completed: ${task.dateCompleted || 'Not completed'})</span>
+                <span>${task.text} (Added: ${task.dateAdded}, Due Date: ${task.dueDate} Completed: ${task.dateCompleted || 'Not completed'})</span>
                 <div class="task-actions">
                     <input type="checkbox" ${task.completed ? 'checked' : ''} class="complete-task">
                     <button class="edit-task-btn">Edit</button>
@@ -69,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const type = document.getElementById('reg-type').value;
         const role = type === 'organization' ? document.getElementById('reg-role').value : 'regular';
         const approved = (type === 'organization' && role ==='regular') ? false : true;
-        console.log(approved);
 
         if (password !== confirmPassword) {
             alert('Passwords do not match');
@@ -150,25 +151,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Add new task
-    addTaskBtn.addEventListener('click', () => {
-        const taskText = taskInput.value.trim();
-        if (taskText !== '') {
-            const tasks = loadTasks();
-            const newTask = {
-                id: Date.now(),
-                text: taskText,
-                dateAdded: new Date().toLocaleString(),
-                addedBy:'self',
-                dateCompleted: null,
-                completed: false,
-                reason: '',
-                userId: currentUserId
-            };
-            tasks.push(newTask);
-            saveTasks(tasks);
-            renderTasks();
-            taskInput.value = '';
-        }
+    addTaskBtn.addEventListener("click", () => {
+      const taskText = taskInput.value.trim();
+      if (taskText !== "") {
+        const dueDate = dueDateInput.value;
+        const tasks = loadTasks();
+        const newTask = {
+          id: Date.now(),
+          text: taskText,
+          dateAdded: new Date().toLocaleString(),
+          dueDate: dueDate,
+          addedBy: "self",
+          dateCompleted: null,
+          completed: false,
+          reason: "",
+          userId: currentUserId,
+        };
+        tasks.push(newTask);
+        saveTasks(tasks);
+        renderTasks();
+        taskInput.value = "";
+        dueDateInput.value= '';
+      }
     });
 
     // Edit task
