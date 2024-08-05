@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmBtn.textContent = "Confirm";
                 confirmBtn.addEventListener("click", function () {
                     task.assignedTo = select.value;
+                    task.completed=false;
                     localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
                     renderTaskList();
                     renderAssignedTasks();
