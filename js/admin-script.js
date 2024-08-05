@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tasksKey = "userTasks";
     const createdTasksKey = "createdTasks";
     const users = JSON.parse(localStorage.getItem(usersKey)) || [];
-    const tasks = JSON.parse(localStorage.getItem(tasksKey)) || {};
+    const tasks = Array.from(JSON.parse(localStorage.getItem(tasksKey)) || {});
     const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
 
     const pendingRegistrationsTable = document.getElementById("pending-registrations").querySelector("tbody");
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const assignedUser = users.find((user) => {
                     return String(user.id).trim() === String(task.assignedTo).trim();
                 });                
-                
+
                 assignedToCell.textContent = assignedUser ? assignedUser.fullName : "N/A";
                 row.appendChild(assignedToCell);
     
@@ -238,7 +238,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             deleteMembersTable.appendChild(row);
         });
-
     // Rank members based on completed tasks %
     function rankMembers() {
         const memberRanks = users
