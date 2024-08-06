@@ -30,14 +30,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const tasksKey = "userTasks";
     const createdTasksKey = "createdTasks";
     const users = JSON.parse(localStorage.getItem(usersKey)) || [];
-    const tasks = Array.from(JSON.parse(localStorage.getItem(tasksKey)) || {});
+    const obj = JSON.parse(localStorage.getItem(tasksKey)) || {};
+    //const tasks = Object.keys(obj).map(key => ({ key: key, value: obj[key] }));
+    const tasks = Object.values(obj);
     const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
+    console.log(tasks[0]);
 
     const pendingRegistrationsTable = document.getElementById("pending-registrations").querySelector("tbody");
     const assignTasksTable = document.getElementById("assign-tasks").querySelector("tbody");
     const deleteMembersTable = document.getElementById("delete-members-list").querySelector("tbody");
     const rankedMembersTable = document.getElementById("ranked-members").querySelector("tbody");
     const taskListTable = document.getElementById("taskListTable").querySelector("tbody");
+    const allTasksTable = document.getElementById('allTasksTable').querySelector("tbody");
 
     // Handle pending registrations
     users
@@ -279,24 +283,63 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     //Admin view all tasks ---currently working on this
-    const allTasksTable = document.getElementById('allTasksTable');
     const taskSearchInput = document.getElementById('taskSearchInput');
     const renderAllTasks = (tasks) => { 
         allTasksTable.innerHTML = ''; 
-        tasks.forEach(task => { 
-            const row = allTasksTable.insertRow(); 
-            row.insertCell(0).innerText = task.task; 
-            row.insertCell(1).innerText = task.assignedTo; 
-            row.insertCell(2).innerText = task.dueDate; 
+        tasks[0].forEach(task => { 
+            const row = document.createElement("tr");
+    
+                const taskCell = document.createElement("td");
+                taskCell.textContent = task.text;
+                row.appendChild(taskCell);
+    
+                const taskForCell = document.createElement("td");
+                const assignedUser = users.find((user) => {
+                    return String(user.id).trim() === String(task.userId).trim();
+                });                
+
+                taskForCell.textContent = assignedUser ? assignedUser.fullName : "N/A";
+                row.appendChild(taskForCell);
+
+                const addedDateCell = document.createElement("td");
+                addedDateCell.textContent = new Date(task.dateAdded).toLocaleString();
+                row.appendChild(addedDateCell);
+    
+                const dueDateCell = document.createElement("td");
+                dueDateCell.textContent = new Date(task.dueDate).toLocaleString();
+                row.appendChild(dueDateCell);
+
+                const isCompletedCell = document.createElement("td");
+                isCompletedCell.textContent = task.completed ? 'Completed':'Not Completed';
+                row.appendChild(isCompletedCell);
+    
+                const reasonCell = document.createElement("td");
+                reasonCell.textContent = task.reason;
+                row.appendChild(reasonCell);
+
+                allTasksTable.appendChild(row);
+    
         }); 
         };
+        renderAllTasks(tasks);
+
+    /**
+     * text
+     *  userId===user.fullName
+     * dateAdded
+     * dueDate
+     * completed
+     * reason
+     */
 
 
 
     //filter tasks
 
     taskSearchInput.addEventListener('input', (e) => {
+        e.preventDefault();
         const searchValue = e.target.value.toLowerCase(); 
+        console.log(searchValue);
         const filteredTasks = tasks.filter(task => task.assignedTo.toLowerCase().includes(searchValue)); 
         renderAllTasks(filteredTasks); }); 
         renderAllTasks(tasks);
