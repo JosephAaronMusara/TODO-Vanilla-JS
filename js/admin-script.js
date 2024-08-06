@@ -277,6 +277,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     rankMembers();
 
+
+    //Admin view all tasks ---currently working on this
+    const allTasksTable = document.getElementById('allTasksTable');
+    const taskSearchInput = document.getElementById('taskSearchInput');
+    const renderAllTasks = (tasks) => { 
+        allTasksTable.innerHTML = ''; 
+        tasks.forEach(task => { 
+            const row = allTasksTable.insertRow(); 
+            row.insertCell(0).innerText = task.task; 
+            row.insertCell(1).innerText = task.assignedTo; 
+            row.insertCell(2).innerText = task.dueDate; 
+        }); 
+        };
+
+
+
+    //filter tasks
+
+    taskSearchInput.addEventListener('input', (e) => {
+        const searchValue = e.target.value.toLowerCase(); 
+        const filteredTasks = tasks.filter(task => task.assignedTo.toLowerCase().includes(searchValue)); 
+        renderAllTasks(filteredTasks); }); 
+        renderAllTasks(tasks);
+
+
     // Dummy data for charts
     const tasksData = {
         labels: ["Completed", "Pending", "Overdue"],

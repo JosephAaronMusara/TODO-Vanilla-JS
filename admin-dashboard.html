@@ -49,20 +49,23 @@
                     <input type="datetime-local" id="dueDateInput" required>
                     <button type="submit">Create Task</button>
                 </form>
-                <table id="taskListTable">
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Due Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="table-container">
+                    <table id="taskListTable">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Due Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </section>
 
             <section id="approve-members" class="content-section">
                 <h2>Approve Member Registrations</h2>
+                <div class="table-container">
                 <table id="pending-registrations">
                     <thead>
                         <tr>
@@ -72,10 +75,12 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                </div>
             </section>
 
             <section id="rank-members" class="content-section">
                 <h2>Rank Members</h2>
+                <div class="table-container">
                 <table id="ranked-members">
                     <thead>
                         <tr>
@@ -85,10 +90,12 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                </div>
             </section>            
 
             <section id="assign-tasks" class="content-section">
                 <h2>Track Assigned Tasks</h2>
+                <div class="table-container">
                 <table id="assign-tasks">
                     <thead>
                         <tr>
@@ -101,14 +108,16 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                </div>
             </section>
 
             <section id="view-tasks" class="content-section">
-                <h2>Track Assigned Tasks</h2>
+                <h2>All User Tasks</h2>
                 <form id="filterTasks">
-                    <input type="search" placeholder="Search Tasks by username [member]">
+                    <input id="taskSearchInput" type="search" placeholder="Search Tasks by username [member]">
                 </form>
-                <table id="view-tasks">
+                <div class="table-container">
+                <table id="allTasksTable">
                     <thead>
                         <tr>
                             <th>Task Description</th>
@@ -121,11 +130,12 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                </div>
             </section>
 
             <section id="delete-members" class="content-section">
                 <h2>Delete Members</h2>
-                <div >
+                <div class="table-container">
                     <table id="delete-members-list">
                         <thead>
                             <tr>
