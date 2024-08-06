@@ -30,11 +30,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const tasksKey = "userTasks";
     const createdTasksKey = "createdTasks";
     const users = JSON.parse(localStorage.getItem(usersKey)) || [];
-    const obj = JSON.parse(localStorage.getItem(tasksKey)) || {};
     //const tasks = Object.keys(obj).map(key => ({ key: key, value: obj[key] }));
-    const tasks = Object.values(obj);
+    const tasks = JSON.parse(localStorage.getItem(tasksKey)) || [];
     const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
-    console.log(tasks[0]);
+    console.log(tasks);
 
     const pendingRegistrationsTable = document.getElementById("pending-registrations").querySelector("tbody");
     const assignTasksTable = document.getElementById("assign-tasks").querySelector("tbody");
@@ -286,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const taskSearchInput = document.getElementById('taskSearchInput');
     const renderAllTasks = (tasks) => { 
         allTasksTable.innerHTML = ''; 
-        tasks[0].forEach(task => { 
+        tasks.forEach(task => { 
             const row = document.createElement("tr");
     
                 const taskCell = document.createElement("td");
