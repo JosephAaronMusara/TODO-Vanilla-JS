@@ -184,10 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const taskItem = e.target.closest('.task-item');
             const taskId = taskItem.dataset.id;
             const newText = prompt('Edit your task:', taskItem.querySelector('span').textContent.split(' (')[0]);
+            const newDueDate = prompt('Date: ', taskItem.querySelector('span').textContent.split(' (')[0]);//pane nyaya apa
+
             if (newText !== null) {
                 const tasks = loadTasks();
                 const task = tasks.find(t => t.id == taskId);
                 task.text = newText;
+                task.dueDate=newDueDate;//nepanapa
                 saveTasks(tasks);
                 renderTasks();
             }
