@@ -30,11 +30,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const tasksKey = "userTasks";
     const createdTasksKey = "createdTasks";
     const users = JSON.parse(localStorage.getItem(usersKey)) || [];
-    //const tasks = Object.keys(obj).map(key => ({ key: key, value: obj[key] }));
     const tasks = JSON.parse(localStorage.getItem(tasksKey)) || [];
-    //const tasks =Object.values(obj);
     const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
-    console.log(tasks);
 
     const pendingRegistrationsTable = document.getElementById("pending-registrations").querySelector("tbody");
     const assignTasksTable = document.getElementById("assign-tasks").querySelector("tbody");
@@ -126,6 +123,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     task.assignedTo = select.value;
                     task.completed=false;
                     localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
+
+                    //nangisei kuUser dashboard
+                    const newAssignedTask = {
+                        id: task.id,
+                        text: task.text,
+                        dateAdded: new Date().toLocaleString(),
+                        dueDate: task.dueDate,
+                        addedBy: "Admin",
+                        dateCompleted: null,
+                        completed: false,
+                        reason: "",
+                        userId: select.value,
+                      };
+                      
+                    const allTasks = JSON.parse(localStorage.getItem('userTasks')) || [];
+                    const filteredTasks = allTasks.filter(task => task.userId !== select.value);
+                    const updatedTasks = [...filteredTasks, ...newAssignedTask];
+                    localStorage.setItem('userTasks', JSON.stringify(updatedTasks));
+
                     renderTaskList();
                     renderAssignedTasks();
                 });
