@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const createdTasksKey = "createdTasks";
     const users = JSON.parse(localStorage.getItem(usersKey)) || [];
     //const tasks = Object.keys(obj).map(key => ({ key: key, value: obj[key] }));
-    const tasks = JSON.parse(localStorage.getItem(tasksKey)) || [];
+    const obj = JSON.parse(localStorage.getItem(tasksKey)) || [];
+    const tasks =Object.values(obj);
     const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
     console.log(tasks);
 

@@ -23,16 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load tasks from local storage
 
     const loadTasks = () => {
-        const tasks = JSON.parse(localStorage.getItem('userTasks')) || {};
-        return tasks[currentUserId] || [];
-      };
+        const tasks = JSON.parse(localStorage.getItem('userTasks')) || [];
+        return tasks.filter(task => task.userId === currentUserId);
+    };
+    
 
     // Save tasks to local storage taraaaaaaaaaaaaa as seperate, with ID as key
     const saveTasks = (tasks) => {
-        const userTasks = JSON.parse(localStorage.getItem('userTasks')) || {};
-        userTasks[currentUserId] = tasks;
-        localStorage.setItem('userTasks', JSON.stringify(userTasks));
-      };
+        const allTasks = JSON.parse(localStorage.getItem('userTasks')) || [];
+        const filteredTasks = allTasks.filter(task => task.userId !== currentUserId);
+        const updatedTasks = [...filteredTasks, ...tasks];
+        localStorage.setItem('userTasks', JSON.stringify(updatedTasks));
+    };
+    
       
 
 
