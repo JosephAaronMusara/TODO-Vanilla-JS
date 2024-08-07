@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
 
-    // Save tasks to local storage taraaaaaaaaaaaaa as seperate, with ID as key
+    // Save tasks to local storage taraaaaaaaaaaaaa
     const saveTasks = (tasks) => {
         const allTasks = JSON.parse(localStorage.getItem('userTasks')) || [];
         const filteredTasks = allTasks.filter(task => task.userId !== currentUserId);
