@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // window.onload = function() {
+    //     const loggedIn = localStorage.getItem('loggedIn');
+    //     if (loggedIn) {
+    //         authButtons.style.display = 'none';
+    //         loginForm.style.display = 'none';
+    //         registrationForm.style.display = 'none';
+    //         taskSection.style.display = 'block';
+    //         renderTasks(currentUserId);
+    //     } 
+    // };
+    
     // Registration and Login Form Elements
     const registrationForm = document.getElementById('registration-form');
     const loginForm = document.getElementById('login-form');
@@ -30,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load tasks assigned by the admin
     const loadAdminAssignedTasks = () => {
         const createdTasks = JSON.parse(localStorage.getItem('createdTasks')) || [];
-        console.log(createdTasks);
         return createdTasks.filter(task => String(task.assignedTo).trim() === String(currentUserId).trim());
     };
 
@@ -99,30 +109,6 @@ const renderTasks = () => {
     }
 };
 
-    // // Render tasks
-    // const renderTasks = () => {
-    //     taskList.innerHTML = '';
-    //     const tasks = loadTasks();
-    //     tasks.forEach(task => {
-    //         const taskItem = document.createElement('li');
-    //         taskItem.classList.add('task-item');
-    //         if (task.completed) {
-    //             taskItem.classList.add('completed');
-    //         }
-    //         taskItem.dataset.id = task.id;
-    //         taskItem.innerHTML = `
-    //             <span>${task.text} (Added: ${task.dateAdded}, Due Date: ${task.dueDate} Completed: ${task.dateCompleted || 'Not completed'})</span>
-    //             <div class="task-actions">
-    //                 <input type="checkbox" ${task.completed ? 'checked' : ''} class="complete-task">
-    //                 <button class="edit-task-btn">Edit</button>
-    //                 <button class="delete-task-btn">Delete</button>
-    //                 <input type="text" placeholder="Reason for not completing" class="incomplete-reason" value="${task.reason || ''}" ${task.completed ? 'disabled' : ''}>
-    //             </div>
-    //         `;
-    //         taskList.appendChild(taskItem);
-    //     });
-    // };
-
     // Handle registration form submission
     registrationForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -160,6 +146,7 @@ const renderTasks = () => {
 
         if (user && (user.role === 'regular') && user.approved) {
             currentUserId = user.id;
+            // localStorage.setItem('loggedIn', 'true');
             alert('Login successful');
             authButtons.style.display = 'none';
             loginForm.style.display = 'none';
@@ -168,6 +155,7 @@ const renderTasks = () => {
             renderTasks();
         }else if (user && (user.type === 'individual')) {
             currentUserId = user.id;
+            // localStorage.setItem('loggedIn', 'true');
             alert('Login successful');
             authButtons.style.display = 'none';
             loginForm.style.display = 'none';
