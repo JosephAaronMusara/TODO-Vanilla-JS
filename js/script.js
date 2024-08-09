@@ -26,7 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const tasks = JSON.parse(localStorage.getItem('userTasks')) || [];
         return tasks.filter(task => task.userId === currentUserId);
     };
-    
+
+    // Load tasks assigned by the admin
+    const loadAdminAssignedTasks = () => {
+        const createdTasks = JSON.parse(localStorage.getItem('createdTasks')) || [];
+        console.log(createdTasks);
+        return createdTasks.filter(task => String(task.assignedTo).trim() === String(currentUserId).trim());
+    };
+
 
     // Save tasks to local storage taraaaaaaaaaaaaa
     const saveTasks = (tasks) => {
@@ -37,12 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
       
+// Render tasks
+const renderTasks = () => {
+    taskList.innerHTML = '';
 
-
-    // Render tasks
-    const renderTasks = () => {
-        taskList.innerHTML = '';
-        const tasks = loadTasks();
+    // Render user-added tasks
+    const tasks = loadTasks();
+    if (tasks.length > 0) {
+        const userTasksHeading = document.createElement('h3');
+        userTasksHeading.textContent = 'Your Tasks';
+        taskList.appendChild(userTasksHeading);
         tasks.forEach(task => {
             const taskItem = document.createElement('li');
             taskItem.classList.add('task-item');
@@ -61,7 +72,56 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             taskList.appendChild(taskItem);
         });
-    };
+    }
+
+    // Render admin-assigned tasks
+    const adminAssignedTasks = loadAdminAssignedTasks();
+    if (adminAssignedTasks.length > 0) {
+        const adminTasksHeading = document.createElement('h3');
+        adminTasksHeading.textContent = 'Admin Assigned Tasks';
+        taskList.appendChild(adminTasksHeading);
+        adminAssignedTasks.forEach(task => {
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('task-item');
+            if (task.completed) {
+                taskItem.classList.add('completed');
+            }
+            taskItem.dataset.id = task.id;
+            taskItem.innerHTML = `
+                <span>${task.text} (Assigned: ${task.dateAdded}, Due Date: ${task.dueDate})</span>
+                <div class="task-actions">
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} class="complete-task">
+                    <input type="text" placeholder="Reason for not completing" class="incomplete-reason" value="${task.reason || ''}" ${task.completed ? 'disabled' : ''}>
+                </div>
+            `;
+            taskList.appendChild(taskItem);
+        });
+    }
+};
+
+    // // Render tasks
+    // const renderTasks = () => {
+    //     taskList.innerHTML = '';
+    //     const tasks = loadTasks();
+    //     tasks.forEach(task => {
+    //         const taskItem = document.createElement('li');
+    //         taskItem.classList.add('task-item');
+    //         if (task.completed) {
+    //             taskItem.classList.add('completed');
+    //         }
+    //         taskItem.dataset.id = task.id;
+    //         taskItem.innerHTML = `
+    //             <span>${task.text} (Added: ${task.dateAdded}, Due Date: ${task.dueDate} Completed: ${task.dateCompleted || 'Not completed'})</span>
+    //             <div class="task-actions">
+    //                 <input type="checkbox" ${task.completed ? 'checked' : ''} class="complete-task">
+    //                 <button class="edit-task-btn">Edit</button>
+    //                 <button class="delete-task-btn">Delete</button>
+    //                 <input type="text" placeholder="Reason for not completing" class="incomplete-reason" value="${task.reason || ''}" ${task.completed ? 'disabled' : ''}>
+    //             </div>
+    //         `;
+    //         taskList.appendChild(taskItem);
+    //     });
+    // };
 
     // Handle registration form submission
     registrationForm.addEventListener('submit', (e) => {
