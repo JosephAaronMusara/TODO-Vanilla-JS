@@ -214,15 +214,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const now = new Date();
         const due = new Date(dueDate);
         const remainingMilliseconds = due - now;
-
+    
         if (remainingMilliseconds <= 0) {
             return { text: "Overdue", overdue: true };
         }
-
+    
+        const days = Math.floor(remainingMilliseconds / (1000 * 60 * 60 * 24));
+        if (days > 0) {
+            return { text: `${days}d`, overdue: false };
+        }
+    
         const hours = Math.floor(remainingMilliseconds / (1000 * 60 * 60));
         const minutes = Math.floor((remainingMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
         return { text: `${hours}h ${minutes}m`, overdue: false };
     }
+    
 
     // Initial rendering
     renderTaskList();
