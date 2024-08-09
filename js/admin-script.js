@@ -367,37 +367,46 @@ document.addEventListener("DOMContentLoaded", function () {
         renderAllTasks(tasks);
 
 
-    // Dummy data for charts
-    const tasksData = {
-        labels: ["Completed", "Pending", "Overdue"],
-        datasets: [
-            {
-                data: [10, 5, 3],
-                backgroundColor: ["#28a745", "#ffc107", "#dc3545"],
-            },
-        ],
-    };
+// Prepare real data for the tasks chart
+const totalTasks = createdTasks.length;
+const completedTasks = createdTasks.filter(task => task.completed).length;
+const overdueTasks = createdTasks.filter(task => new Date(task.dueDate) < new Date() && !task.completed).length;
+const pendingTasks = totalTasks - completedTasks - overdueTasks;
 
-    const membersData = {
-        labels: ["Active", "Inactive"],
-        datasets: [
-            {
-                data: [8, 2],
-                backgroundColor: ["#007bff", "#6c757d"],
-            },
-        ],
-    };
+const tasksData = {
+    labels: ["Completed", "Pending", "Overdue"],
+    datasets: [
+        {
+            data: [completedTasks, pendingTasks, overdueTasks],
+            backgroundColor: ["#28a745", "#ffc107", "#dc3545"],
+        },
+    ],
+};
 
-    // Initialize charts
-    const tasksChartCtx = document.getElementById("tasksChart").getContext("2d");
-    new Chart(tasksChartCtx, {
-        type: "doughnut",
-        data: tasksData,
-    });
+// Prepare real data for the members chart
+const activeMembers = users.filter(user => user.approved && user.type === "organization" && user.role === "regular").length;
+const inactiveMembers = users.length - activeMembers;
 
-    const membersChartCtx = document.getElementById("membersChart").getContext("2d");
-    new Chart(membersChartCtx, {
-        type: "doughnut",
-        data: membersData,
-    });
+const membersData = {
+    labels: ["Active", "Inactive"],
+    datasets: [
+        {
+            data: [activeMembers, inactiveMembers],
+            backgroundColor: ["#007bff", "#6c757d"],
+        },
+    ],
+};
+
+// Initialize charts with real data
+const tasksChartCtx = document.getElementById("tasksChart").getContext("2d");
+new Chart(tasksChartCtx, {
+    type: "doughnut",
+    data: tasksData,
+});
+
+const membersChartCtx = document.getElementById("membersChart").getContext("2d");
+new Chart(membersChartCtx, {
+    type: "doughnut",
+    data: membersData,
+});
 });
