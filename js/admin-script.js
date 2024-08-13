@@ -52,6 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("allTasksTable")
     .querySelector("tbody");
 
+  // function for showing notifications
+  function showNotification(message) {
+    alert(message);
+  }
+
   // Handle pending registrations
   users
     .filter((user) => user.type === "organization" && !user.approved)
@@ -69,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         user.approved = true;
         localStorage.setItem(usersKey, JSON.stringify(users));
         row.remove();
+        showNotification("User approved successfully.");
       });
       actionCell.appendChild(approveBtn);
       row.appendChild(actionCell);
@@ -76,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
       pendingRegistrationsTable.appendChild(row);
     });
 
-  // Create tasks
+  // Create tasks with date validation
   const createTaskForm = document.getElementById("createTaskForm");
   createTaskForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -84,12 +90,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const dueDateInput = document.getElementById("dueDateInput");
 
     const taskText = taskInput.value;
-    const dueDate = dueDateInput.value;
+    const dueDate = new Date(dueDateInput.value);
+
+    // Validate that the due date is not in the past
+    if (dueDate < new Date()) {
+      showNotification("Due date cannot be in the past.");
+      return;
+    }
 
     createdTasks.push({
       id: Date.now(),
       text: taskText,
-      dueDate: dueDate,
+      dueDate: dueDate.toISOString(),
       assignedTo: null,
       completed: false,
     });
@@ -99,6 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dueDateInput.value = "";
 
     renderTaskList();
+    showNotification("Task created successfully.");
   });
 
   function renderTaskList() {
@@ -137,32 +150,13 @@ document.addEventListener("DOMContentLoaded", function () {
         confirmBtn.textContent = "Confirm";
         confirmBtn.addEventListener("click", function () {
           task.assignedTo = select.value;
-          task.dateAdded = new Date().toLocaleString(),
+          task.dateAdded = new Date().toLocaleString();
           task.completed = false;
           localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
 
-        //   //nangisei kuUser dashboard
-        //   const newAssignedTask = {
-        //     id: task.id,
-        //     text: task.text,
-        //     dateAdded: new Date().toLocaleString(),
-        //     dueDate: task.dueDate,
-        //     addedBy: "Admin",
-        //     dateCompleted: null,
-        //     completed: false,
-        //     reason: "",
-        //     userId: select.value,
-        //   };
-
-        //   const allTasks = JSON.parse(localStorage.getItem("userTasks")) || [];
-        //   const filteredTasks = allTasks.filter(
-        //     (task) => task.userId !== select.value
-        //   );
-        //   const updatedTasks = [...filteredTasks, ...newAssignedTask];
-        //   localStorage.setItem("userTasks", JSON.stringify(updatedTasks));
-
           renderTaskList();
           renderAssignedTasks();
+          showNotification("Task assigned successfully.");
         });
 
         actionCell.innerHTML = "";
@@ -217,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
           task.completed = true;
           localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
           renderAssignedTasks();
+          showNotification("Task marked as completed.");
         });
         if (task.completed) {
           completeBtn.disabled = true;
@@ -258,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update assigned tasks every minute to reflect time remaining
   setInterval(renderAssignedTasks, 60000);
 
-  // Delete members
+  // Delete members with confirmation
   users
     .filter((user) => user.type === "organization" && user.role === "regular")
     .forEach((user) => {
@@ -276,9 +271,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const deleteBtn = document.createElement("button");
       deleteBtn.textContent = "Delete";
       deleteBtn.addEventListener("click", function () {
-        users.splice(users.indexOf(user), 1);
-        localStorage.setItem(usersKey, JSON.stringify(users));
-        row.remove();
+        const confirmed = confirm(
+          `Are you sure you want to delete ${user.fullName}?`
+        );
+        if (confirmed) {
+          const userIndex = users.findIndex((u) => u.id === user.id);
+          users.splice(userIndex, 1);
+          localStorage.setItem(usersKey, JSON.stringify(users));
+          row.remove();
+          showNotification("User deleted successfully.");
+        }
       });
       actionsCell.appendChild(deleteBtn);
       row.appendChild(actionsCell);
