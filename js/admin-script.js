@@ -33,56 +33,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const tasks = JSON.parse(localStorage.getItem(tasksKey)) || [];
   const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
 
-  const pendingRegistrationsTable = document
-    .getElementById("pending-registrations")
-    .querySelector("tbody");
-  const assignTasksTable = document
-    .getElementById("assign-tasks")
-    .querySelector("tbody");
-  const deleteMembersTable = document
-    .getElementById("delete-members-list")
-    .querySelector("tbody");
-  const rankedMembersTable = document
-    .getElementById("ranked-members")
-    .querySelector("tbody");
-  const taskListTable = document
-    .getElementById("taskListTable")
-    .querySelector("tbody");
-  const allTasksTable = document
-    .getElementById("allTasksTable")
-    .querySelector("tbody");
+  const assignTasksTable = document.getElementById("assign-tasks").querySelector("tbody");
+  const rankedMembersTable = document.getElementById("ranked-members").querySelector("tbody");
+  const taskListTable = document.getElementById("taskListTable").querySelector("tbody");
+  const allTasksTable = document.getElementById("allTasksTable").querySelector("tbody");
+  const userManagementTable = document.getElementById("member-management").querySelector("tbody");
 
-  // function for showing notifications
+  //notifications
   function showNotification(message) {
     alert(message);
   }
 
-  // Handle pending registrations
-  users
-    .filter((user) => user.type === "organization" && !user.approved)
-    .forEach((user) => {
-      const row = document.createElement("tr");
-
-      const emailCell = document.createElement("td");
-      emailCell.textContent = user.email;
-      row.appendChild(emailCell);
-
-      const actionCell = document.createElement("td");
-      const approveBtn = document.createElement("button");
-      approveBtn.textContent = "Approve";
-      approveBtn.addEventListener("click", function () {
-        user.approved = true;
-        localStorage.setItem(usersKey, JSON.stringify(users));
-        row.remove();
-        showNotification("User approved successfully.");
-      });
-      actionCell.appendChild(approveBtn);
-      row.appendChild(actionCell);
-
-      pendingRegistrationsTable.appendChild(row);
-    });
-
-  // Create tasks with date validation
+  // Create tasks ----------- with date validation
   const createTaskForm = document.getElementById("createTaskForm");
   createTaskForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -253,40 +215,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update assigned tasks every minute to reflect time remaining
   setInterval(renderAssignedTasks, 60000);
 
-  // Delete members with confirmation
-  users
-    .filter((user) => user.type === "organization" && user.role === "regular")
-    .forEach((user) => {
-      const row = document.createElement("tr");
-
-      const nameCell = document.createElement("td");
-      nameCell.textContent = user.fullName;
-      row.appendChild(nameCell);
-
-      const emailCell = document.createElement("td");
-      emailCell.textContent = user.email;
-      row.appendChild(emailCell);
-
-      const actionsCell = document.createElement("td");
-      const deleteBtn = document.createElement("button");
-      deleteBtn.textContent = "Delete";
-      deleteBtn.addEventListener("click", function () {
-        const confirmed = confirm(
-          `Are you sure you want to delete ${user.fullName}?`
-        );
-        if (confirmed) {
-          const userIndex = users.findIndex((u) => u.id === user.id);
-          users.splice(userIndex, 1);
-          localStorage.setItem(usersKey, JSON.stringify(users));
-          row.remove();
-          showNotification("User deleted successfully.");
-        }
-      });
-      actionsCell.appendChild(deleteBtn);
-      row.appendChild(actionsCell);
-
-      deleteMembersTable.appendChild(row);
-    });
   // Rank members based on completed tasks %
   function rankMembers() {
     const memberRanks = users
@@ -313,17 +241,17 @@ document.addEventListener("DOMContentLoaded", function () {
     memberRanks.forEach((member) => {
       const row = document.createElement("tr");
 
-      const fullNameCell = document.createElement("td");
-      fullNameCell.textContent = member.fullName;
-      row.appendChild(fullNameCell);
+      const nameCell = document.createElement("td");
+      nameCell.textContent = member.fullName;
+      row.appendChild(nameCell);
 
       const taskCompletionCell = document.createElement("td");
-      taskCompletionCell.textContent = `${member.taskCompletionPercentage.toFixed(
-        2
-      )}%`;
+      taskCompletionCell.textContent = `${member.taskCompletionPercentage.toFixed(2)}%`;
       row.appendChild(taskCompletionCell);
 
-      rankedMembersTable.appendChild(row);
+      rankedMembersTable.appendChild(row)
+
+      //userManagementTable.appendChild(row);
     });
   }
   rankMembers();
@@ -381,15 +309,71 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   renderAllTasks(tasks);
 
-  /**
-   * Mmber management
-   *  Del, approve,rank = {username,
-      email,
-      task completion %,
-      Approved,
-      Active,
-      action = [Approve, activate, suspend,delete]}
-   */
+  users.filter((user) => user.type === "organization" && user.role === "regular").forEach((user) => {
+
+      
+      const row = document.createElement("tr");
+
+      const nameCell = document.createElement("td");
+      nameCell.textContent = user.fullName;
+      row.appendChild(nameCell);
+
+      const emailCell = document.createElement("td");
+      emailCell.textContent = user.email;
+      row.appendChild(emailCell);
+
+      const isApprovedCell = document.createElement("td");
+      isApprovedCell.textContent = user.approved ? "YES" : "NO";
+      row.appendChild(isApprovedCell);
+
+      const actionsCell = document.createElement("td");
+
+      const approveBtn = document.createElement("button");
+      approveBtn.textContent = user.approved ? "Deactivate" : "Activate";
+      approveBtn.style.backgroundColor = approveBtn.textContent == "Deactivate" ? "orange" : "green";
+      approveBtn.addEventListener("click", function () {
+        if(!user.approved){
+        user.approved = true;
+        localStorage.setItem(usersKey, JSON.stringify(users));
+        approveBtn.textContent = "Deactivate";
+        showNotification(`Account for ${user.fullName} successfully activated!`);
+        }else{
+          user.approved = false;
+          localStorage.setItem(usersKey, JSON.stringify(users));
+          approveBtn.textContent = "Activate";
+          showNotification(`Account for ${user.fullName} successfully deactivated!`);
+        }
+        
+      });
+
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "Edit";
+      editBtn.addEventListener("click",function(){
+        //Edit logic hee
+      });
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.style.backgroundColor = "red";
+      deleteBtn.addEventListener("click", function () {
+        const confirmed = confirm(
+          `Are you sure you want to delete ${user.fullName}?`
+        );
+        if (confirmed) {
+          const userIndex = users.findIndex((u) => u.id === user.id);
+          users.splice(userIndex, 1);
+          localStorage.setItem(usersKey, JSON.stringify(users));
+          row.remove();
+          showNotification("User deleted successfully.");
+        }
+      });
+      actionsCell.appendChild(deleteBtn);
+      actionsCell.appendChild(approveBtn);
+      actionsCell.appendChild(editBtn);
+      row.appendChild(actionsCell);
+
+      userManagementTable.appendChild(row);
+    });
 
   const totalTasks = createdTasks.length;
   const completedTasks = createdTasks.filter((task) => task.completed).length;
