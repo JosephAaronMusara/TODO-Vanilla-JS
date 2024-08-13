@@ -43,6 +43,15 @@
 
             <section id="create-tasks" class="content-section">
                 <h2>TASKS</h2>
+                <div class="select-action">
+                    <form >
+                    <select name="view-what" id="view-what">
+                        <option value="Create Task">Create Task</option>
+                        <option value="Assigned Tasks">Assigned Tasks</option>
+                        <option value="All Created Tasks">All Created Tasks</option>
+                    </select>
+                </form>
+                </div>
                 <form id="createTaskForm">
                     <input type="text" id="taskInput" placeholder="Task Description" required>
                     <input type="datetime-local" id="dueDateInput" required>
@@ -53,7 +62,6 @@
                         <thead>
                             <tr>
                                 <th>Task</th>
-                                <th>Assigned to</th>
                                 <th>Due Date</th>
                                 <th>Action</th>
                             </tr>
