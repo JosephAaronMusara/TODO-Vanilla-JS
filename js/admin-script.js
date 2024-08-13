@@ -381,6 +381,16 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   renderAllTasks(tasks);
 
+  /**
+   * Mmber management
+   *  Del, approve,rank = {username,
+      email,
+      task completion %,
+      Approved,
+      Active,
+      action = [Approve, activate, suspend,delete]}
+   */
+
   const totalTasks = createdTasks.length;
   const completedTasks = createdTasks.filter((task) => task.completed).length;
   const overdueTasks = createdTasks.filter(
