@@ -209,8 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Initial rendering
+  overView();
   renderTaskList();
   renderAssignedTasks();
+  renderUsers();
 
   // Update assigned tasks every minute to reflect time remaining
   setInterval(renderAssignedTasks, 60000);
@@ -299,19 +301,20 @@ document.addEventListener("DOMContentLoaded", function () {
   renderAllTasks(tasks);
 
   //filter tasks
-  taskSearchInput.addEventListener("input", (e) => {
-    e.preventDefault();
-    const searchValue = e.target.value.toLowerCase();
-    const filteredTasks = tasks.filter((task) =>
-      String(task.text).toLowerCase().includes(searchValue)
-    );
-    renderAllTasks(filteredTasks);
-  });
-  renderAllTasks(tasks);
+  // taskSearchInput.addEventListener("input", (e) => {
+  //   e.preventDefault();
+  //   const searchValue = e.target.value.toLowerCase();
+  //   const filteredTasks = tasks.filter((task) =>
+  //     String(task.text).toLowerCase().includes(searchValue)
+  //   );
+  //   renderAllTasks(filteredTasks);
+  // });
+  // renderAllTasks(tasks);
+
+  function renderUsers(){
 
   users.filter((user) => user.type === "organization" && user.role === "regular").forEach((user) => {
 
-      
       const row = document.createElement("tr");
 
       const nameCell = document.createElement("td");
@@ -349,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const editBtn = document.createElement("button");
       editBtn.textContent = "Edit";
       editBtn.addEventListener("click",function(){
-        //Edit logic hee
+        //Edit logic heeeeeeeeee
       });
 
       const deleteBtn = document.createElement("button");
@@ -373,8 +376,44 @@ document.addEventListener("DOMContentLoaded", function () {
       row.appendChild(actionsCell);
 
       userManagementTable.appendChild(row);
-    });
+    })
+  };
 
+
+  //cont rend
+  const viewWhatSelect = document.getElementById('view-what-select');
+
+  viewWhatSelect.addEventListener("change", function () {
+    const selectedValue = viewWhatSelect.value;
+
+    createTaskForm.style.display = "none";
+    taskListTable.parentElement.style.display = "none";
+    assignTasksTable.parentElement.style.display = "none";
+    allTasksTable.parentElement.style.display = "none";
+
+    switch (selectedValue) {
+      case "CreateTask":
+        createTaskForm.style.display = "block";
+        break;
+      case "AssignedTasks":
+        assignTasksTable.parentElement.style.display = "block";
+        renderAssignedTasks();
+        break;
+      case "AllCreatedTasks":
+        taskListTable.parentElement.style.display = "block";
+        renderTaskList();
+        break;
+      case "AllUserTasks":
+        allTasksTable.parentElement.style.display = "block";
+        renderAllTasks(tasks);
+        break;
+    }
+  });
+
+  // Initialize the view based on default select value
+  viewWhatSelect.dispatchEvent(new Event("change"));
+
+function overView(){
   const totalTasks = createdTasks.length;
   const completedTasks = createdTasks.filter((task) => task.completed).length;
   const overdueTasks = createdTasks.filter(
@@ -421,4 +460,5 @@ document.addEventListener("DOMContentLoaded", function () {
     type: "doughnut",
     data: membersData,
   });
+}
 });

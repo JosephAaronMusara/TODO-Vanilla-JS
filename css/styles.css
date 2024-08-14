@@ -86,7 +86,7 @@ input[type="text"] {
 
 #side-nav h2 {
     margin-top: 0;
-    color: white;
+    color: black;
 }
 
 #side-nav nav ul {
@@ -229,7 +229,7 @@ input[type="text"] {
 }
 
 /* Table css -- in asmin */
-table {
+/* table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -253,7 +253,7 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
     background-color: #ddd;
-}
+} */
 
 
 /* tables */
@@ -275,11 +275,18 @@ tbody tr:hover {
     border-bottom: 1px solid #ddd;
 }
 
-/* Fixed header styles */
 .table-container thead th {
     position: sticky;
     top: 0;
     background-color: #007BFF;
     color: white;
     border-bottom: 2px solid #ddd;
+}
+
+.table-container tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table-container tbody tr:hover {
+    background-color: #ddd;
 }

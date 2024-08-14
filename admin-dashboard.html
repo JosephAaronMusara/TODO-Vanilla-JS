@@ -17,15 +17,13 @@
     </script>
     <div id="admin-dashboard">
         <aside id="side-nav">
-            <h2 style="color: black;">Admin Dashboard</h2>
+            <h2>Admin Dashboard</h2>
             <nav>
                 <ul>
                     <li><a href="#overview" data-section="overview">Overview</a></li>
                     <li><a href="#manage-members" data-section="manage-members">Members</a></li>
-                    <li><a href="#create-tasks" data-section="create-tasks">Tasks</a></li>
-                    <li><a href="#rank-members" data-section="rank-members">Rank Members</a></li>
-                    <li><a href="#assign-tasks" data-section="assign-tasks">Track Assigned Tasks</a></li>
-                    <li><a href="#view-tasks" data-section="view-tasks">View All Tasks</a></li>
+                    <li><a href="#manage-tasks" data-section="manage-tasks">Tasks</a></li>
+                    <li><a href="#rank-members" data-section="rank-members">Statistics</a></li>
                     <li><button id="logout-btn">Logout</button></li>
                 </ul>
             </nav>
@@ -41,11 +39,11 @@
                 </div>
             </section>
 
-            <section id="create-tasks" class="content-section">
+            <section id="manage-tasks" class="content-section">
                 <h2>TASKS</h2>
                 <div class="select-action">
                     <form >
-                    <select name="view-what" id="view-what">
+                    <select name="view-what" id="view-what-select">
                         <option value="CreateTask">Create Task</option>
                         <option value="AssignedTasks">Assigned Tasks</option>
                         <option value="AllCreatedTasks">All Created Tasks</option>
@@ -65,6 +63,31 @@
                                 <th>Task</th>
                                 <th>Due Date</th>
                                 <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table id="assign-tasks">
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>Assigned To</th>
+                                <th>Due Date</th>
+                                <th>Time Remaining</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <table id="allTasksTable">
+                        <thead>
+                            <tr>
+                                <th>Task Description</th>
+                                <th>Member</th>
+                                <th>Created On</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th>Reason</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -103,46 +126,6 @@
                 </table>
                 </div>
             </section>            
-
-            <section id="assign-tasks" class="content-section">
-                <h2>Track Assigned Tasks</h2>
-                <div class="table-container">
-                <table id="assign-tasks">
-                    <thead>
-                        <tr>
-                            <th>Task</th>
-                            <th>Assigned To</th>
-                            <th>Due Date</th>
-                            <th>Time Remaining</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                </div>
-            </section>
-
-            <section id="view-tasks" class="content-section">
-                <h2>All User Tasks</h2>
-                <form id="filterTasks">
-                    <input id="taskSearchInput" type="search" placeholder="Search Tasks by username [member]">
-                </form>
-                <div class="table-container">
-                <table id="allTasksTable">
-                    <thead>
-                        <tr>
-                            <th>Task Description</th>
-                            <th>Member</th>
-                            <th>Created On</th>
-                            <th>Due Date</th>
-                            <th>Status</th>
-                            <th>Reason</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-                </div>
-            </section>
 
         </main>
     </div>
