@@ -228,34 +228,6 @@ input[type="text"] {
     border-radius: 5px;
 }
 
-/* Table css -- in asmin */
-/* table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-thead th {
-    background-color: #007BFF;
-    color: white;
-    border-bottom: 2px solid #ddd;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-tbody tr:hover {
-    background-color: #ddd;
-} */
-
-
 /* tables */
 .table-container {
     position: relative;
@@ -272,6 +244,7 @@ tbody tr:hover {
 .table-container th, .table-container td {
     padding: 12px 15px;
     text-align: left;
+    flex: auto;
     border-bottom: 1px solid #ddd;
 }
 
