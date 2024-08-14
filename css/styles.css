@@ -247,6 +247,9 @@ input[type="text"] {
     flex: auto;
     border-bottom: 1px solid #ddd;
 }
+.table-container td button{
+    margin-right: 5px;
+}
 
 .table-container thead th {
     position: sticky;
