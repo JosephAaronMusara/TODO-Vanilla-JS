@@ -299,7 +299,7 @@ input[type="text"] {
     text-align: left;
     flex: auto;
     border-bottom: 1px solid #ddd;
-    border-right: 1px solid #007BFF;
+    border-right: 1px solid #ddd;
 }
 .table-container td button{
     margin-right: 5px;

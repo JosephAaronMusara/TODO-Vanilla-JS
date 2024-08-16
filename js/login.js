@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentUserId = user.id;
                 alert('Login successful');
                 localStorage.setItem('currentUserId', currentUserId);
-                window.location.href = 'tasks.html';
+                window.location.href = 'index.html';
             } else if (user && (user.type === 'individual')) {
                 currentUserId = user.id;
                 localStorage.setItem('currentUserId', currentUserId);
                 alert('Login successful');
-                window.location.href = 'tasks.html';
+                window.location.href = 'index.html';
             } else if (user && (user.role === 'admin')) {
                 currentUserId = user.id;
                 localStorage.setItem('loggedInUser', JSON.stringify('admin'));

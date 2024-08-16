@@ -22,14 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let editingTaskId = null;
 
-    const currentUserId = localStorage.getItem('currentUserId');
-
-    if (!currentUserId) {
-        alert('No user is logged in. Redirecting to login page.');
-        window.location.href = 'login.html';
-        return;
-    }
-
     const loadTasks = () => {
         const tasks = JSON.parse(localStorage.getItem('userTasks')) || [];
         return tasks.filter(task => task.userId === currentUserId);
