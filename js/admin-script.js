@@ -127,12 +127,14 @@ document.addEventListener("DOMContentLoaded", function () {
         actionCell.appendChild(confirmBtn);
         actionCell.appendChild(editTaskBtn);
       });
+      
+
       const editTaskBtn = document.createElement("button");
       editTaskBtn.textContent = "Edit";
-
-      editTaskBtn.addEventListener('click',function(){
-
-// I need code here
+      editTaskBtn.addEventListener('click',()=>{
+        document.getElementById('edit-task-form').classList.remove('hidden');
+        document.getElementById('admin-edit-task-text').value = task.text;
+        document.getElementById('admin-edit-task-due-date').value = task.dueDate;
       });
       actionCell.appendChild(assignBtn);
       actionCell.appendChild(editTaskBtn);
@@ -141,6 +143,16 @@ document.addEventListener("DOMContentLoaded", function () {
       taskListTable.appendChild(row);
     });
   }
+  const cancelTastEdit = document.getElementById('cancel-task-btn');
+  cancelTastEdit.addEventListener('click',()=>{
+    document.getElementById('edit-task-form').classList.add('hidden');
+  });
+
+  const saveTaskEdit = document.getElementById('save-task-btn');
+  saveTaskEdit.addEventListener('click',()=>{
+    document.getElementById('edit-task-form').classList.add('hidden');
+    alert('Unable to update tasks at the moment');
+  });
 
   function renderAssignedTasks() {
     assignTasksTable.innerHTML = "";
