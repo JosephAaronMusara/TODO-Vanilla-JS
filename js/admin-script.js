@@ -2,8 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const logoutBtn = document.getElementById("logout-btn");
 
   logoutBtn.addEventListener("click", function () {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
+    const isConfirmed = confirm('Are you sure you want to log out?');
+        if (isConfirmed) {
+          localStorage.removeItem("loggedInUser");
+          window.location.href = "login.html";
+        }
   });
 
   // Handle navigation
