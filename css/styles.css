@@ -11,6 +11,9 @@ body {
 .select-action{
     padding-bottom: 10px;
 }
+#view-what-select{
+    width: 20%;
+}
 
 #app {
     width: 100%;

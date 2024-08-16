@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const logoutBtn = document.getElementById('logout-btn-user');
 
+    const currentUserId = JSON.parse(localStorage.getItem('currentUserId'));
+
     logoutBtn.addEventListener('click', () => {
         const isConfirmed = confirm('Are you sure you want to log out?');
         
