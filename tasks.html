@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Task Manager</h1>
+        <button id="logout-btn-user">Logout</button>
+
+        <div id="edit-task-form" class="edit-task-form hidden">
+            <input type="text" id="edit-task-text" placeholder="Task text">
+            <input type="date" id="edit-task-due-date">
+            <button id="save-task-btn">Save</button>
+            <button id="cancel-task-btn">Cancel</button>
+        </div>
+        
+        <div id="task-section">
+            <div id="task-form">
+                <input type="text" id="task-input" placeholder="Enter your task[Task Description]">
+                <label for="zuva" style="margin-top: 20px;">Due :</label>
+                <input type="date" id="task-input-due-date" name="zuva" style="margin-left: 10px;margin-right: 10px;">
+                <button id="add-task-btn">Add Task</button>
+            </div>
+            <ul id="task-list"></ul>
+        </div>
+    </div>
+    <script src="js/tasks.js"></script>
+</body>
+</html>

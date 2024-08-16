@@ -2,9 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const logoutBtn = document.getElementById("logout-btn");
 
   logoutBtn.addEventListener("click", function () {
-    // Handle logout logic here
     localStorage.removeItem("loggedInUser");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   });
 
   // Handle navigation
