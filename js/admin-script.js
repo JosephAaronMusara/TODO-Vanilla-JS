@@ -262,8 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
       row.appendChild(taskCompletionCell);
 
       rankedMembersTable.appendChild(row)
-
-      //userManagementTable.appendChild(row);
     });
   }
   rankMembers();
