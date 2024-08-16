@@ -20,8 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    let editingTaskId = null;
-
     const loadTasks = () => {
         const tasks = JSON.parse(localStorage.getItem('userTasks')) || [];
         return tasks.filter(task => task.userId === currentUserId);
@@ -124,7 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Task added Successfully!");
         }
     });
-
+    
+    let editingTaskId = null;
     taskList.addEventListener('click', (e) => {
         if (e.target.classList.contains('edit-task-btn')) {
             const taskItem = e.target.closest('.task-item');

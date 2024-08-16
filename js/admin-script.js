@@ -361,6 +361,7 @@ document.addEventListener("DOMContentLoaded", function () {
       editBtn.textContent = "Edit";
       editBtn.addEventListener("click",function(){
         //Edit logic heeeeeeeeee
+        alert('User editing will be implemented in the next update!');
       });
 
       const deleteBtn = document.createElement("button");
@@ -418,7 +419,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Initialize the view based on default select value
   viewWhatSelect.dispatchEvent(new Event("change"));
 
 function overView(){
