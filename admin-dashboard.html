@@ -128,6 +128,19 @@
 
             <section id="rank-members" class="content-section">
                 <h2>Rank Members</h2>
+                <div class="select-action">
+                    <form >
+                    <select name="view-what" id="view-what-select">
+                        <option value="completedTasks">Completed Tasks</option>
+                        <option value="completedOnTime">Completed On Time</option>
+                        <option value="completedAfterTime">Completed After Due Date</option>
+                        <option value="rankMembersByTasksCompleted">Rank Members By Tasks Completed</option>
+                        <option value="rankMembersByTasksCompletedOnTime">Rank Members By Tasks Completed On Time</option>
+                        <option value="rankMembersByTasksAssigned">Rank Members By Tasks Assigned</option>
+                        <option value="rankMembersByNumberOfTasks">Rank Members By Number Of Tasks</option>
+                    </select>
+                </form>
+                </div>
                 <div class="table-container">
                 <table id="ranked-members">
                     <thead>

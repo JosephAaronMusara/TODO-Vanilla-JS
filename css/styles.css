@@ -8,6 +8,9 @@ body {
     align-items: center;
     height: 100vh;
 }
+.select-action{
+    padding-bottom: 10px;
+}
 
 #app {
     width: 100%;
