@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTasks();
             taskInput.value = "";
             dueDateInput.value= '';
+            alert("Task added Successfully!");
         }
     });
 

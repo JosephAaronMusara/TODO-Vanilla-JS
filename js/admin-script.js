@@ -109,7 +109,6 @@ document.addEventListener("DOMContentLoaded", function () {
             select.appendChild(option);
           }
         });
-
         const confirmBtn = document.createElement("button");
         confirmBtn.textContent = "Confirm";
         confirmBtn.addEventListener("click", function () {
@@ -126,8 +125,17 @@ document.addEventListener("DOMContentLoaded", function () {
         actionCell.innerHTML = "";
         actionCell.appendChild(select);
         actionCell.appendChild(confirmBtn);
+        actionCell.appendChild(editTaskBtn);
+      });
+      const editTaskBtn = document.createElement("button");
+      editTaskBtn.textContent = "Edit";
+
+      editTaskBtn.addEventListener('click',function(){
+
+// I need code here
       });
       actionCell.appendChild(assignBtn);
+      actionCell.appendChild(editTaskBtn);
       row.appendChild(actionCell);
 
       taskListTable.appendChild(row);
