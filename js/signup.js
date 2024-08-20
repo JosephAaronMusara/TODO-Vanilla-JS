@@ -13,13 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const type = document.getElementById('reg-type').value;
         const role = type === 'organization' ? document.getElementById('reg-role').value : 'regular';
         const approved = (type === 'organization' && role === 'regular') ? false : true;
+        const users = JSON.parse(localStorage.getItem('users')) || [];
 
         if (password !== confirmPassword) {
             alert('Passwords do not match');
             return;
         }
+        existing_emails = []
+        users.forEach((user) => {
+            existing_emails.push(user.email); 
+        });
 
-        const users = JSON.parse(localStorage.getItem('users')) || [];
+        if(existing_emails.includes(email)){
+            alert(`User with email ${email} already exists`);
+            em_field = document.getElementById('reg-email');
+            registrationForm.reset()//not sure if its necessary
+            return;
+        }
+
         users.push({ fullName, email, password, contact, type, role, approved, id: Date.now() });
         localStorage.setItem('users', JSON.stringify(users));
         alert('Registration successful! Proceed to login or wait for approval if you are an organization member');
