@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const editTaskDueDate = document.getElementById('edit-task-due-date');
     const saveTaskBtn = document.getElementById('save-task-btn');
     const cancelTaskBtn = document.getElementById('cancel-task-btn');
+    const userTasksTable = document.getElementById('userTasksTable');
 
     const logoutBtn = document.getElementById('logout-btn-user');
 
@@ -48,6 +49,53 @@ document.addEventListener('DOMContentLoaded', () => {
             userTasksHeading.textContent = 'Your Tasks';
             taskList.appendChild(userTasksHeading);
             tasks.forEach(task => {
+                // const row = document.createElement("tr");
+
+                // const descriptionCell = document.createElement("td");
+                // descriptionCell.textContent = task.text;
+                // row.appendChild(descriptionCell);
+
+                // const dateAddedCell = document.createElement("td");
+                // dateAddedCell.textContent = task.dateAdded;
+                // row.appendChild(dateAddedCell);
+
+                // const dueDateCell = document.createElement("td");
+                // dueDateCell.textContent = task.dueDate;
+                // row.appendChild(dueDateCell);
+
+                // const dateCompletedCell = document.createElement("td");
+                // dateCompletedCell.textContent = task.completed ? task.dateCompleted : 'Not Completed';
+                // row.appendChild(dateCompletedCell);
+
+                // const reason = document.createElement('input');
+                // reason.type = 'text';
+                // reason.classList = 'incomplete-reason';
+                // reason.placeholder = 'Reason for not completing';
+                // reason.disabled = task.completed ? true: false;
+                // reason.value = task.completed ? '' : task.reason;
+                // row.appendChild(reason);
+
+                // const actionsCell = document.createElement("td");
+
+                // const completedChk = document.createElement('input');
+                // completedChk.type = 'checkbox';
+                // completedChk.className = 'complete-task'
+                // completedChk.checked = task.completed ? true : false;
+                // completedChk.style.marginRight = '15px'
+
+                // const deleteTskBtn = document.createElement('button');
+                // deleteTskBtn.textContent = 'Delete';
+                
+                // const editTskBtn = document.createElement('button');
+                // editTskBtn.textContent = 'Edit';
+
+                // actionsCell.appendChild(completedChk);
+                // actionsCell.appendChild(editTskBtn);
+                // actionsCell.appendChild(deleteTskBtn);
+                // row.appendChild(actionsCell);
+
+                // userTasksTable.appendChild(row);
+
                 const taskItem = document.createElement('li');
                 taskItem.classList.add('task-item');
                 if (task.completed) {
