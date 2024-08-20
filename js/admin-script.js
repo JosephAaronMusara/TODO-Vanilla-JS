@@ -360,11 +360,13 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem(usersKey, JSON.stringify(users));
         approveBtn.textContent = "Deactivate";
         showNotification(`Account for ${user.fullName} successfully activated!`);
+        location.reload();
         }else{
           user.approved = false;
           localStorage.setItem(usersKey, JSON.stringify(users));
           approveBtn.textContent = "Activate";
           showNotification(`Account for ${user.fullName} successfully deactivated!`);
+          location.reload();
         }
         
       });
