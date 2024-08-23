@@ -9,7 +9,7 @@
 </head>
 <body>
     <script>
-        document.addEventListener('DOMContentLoaded',function(){
+        document.addEventListener('DOMContentLoaded', function() {
             const currentUserId = localStorage.getItem('currentUserId');
             if (!currentUserId) {
                 window.location.href = 'login.html';
@@ -34,7 +34,8 @@
                 <input type="date" id="task-input-due-date" name="zuva" style="margin-left: 10px;margin-right: 10px;">
                 <button id="add-task-btn">Add Task</button>
             </div>
-            <!-- <div class="usertable-container">
+
+            <div class="table-container">
                 <table id="userTasksTable">
                     <thead>
                         <tr>
@@ -48,8 +49,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                </div> -->
-            <ul id="task-list"></ul>
+            </div>
         </div>
     </div>
     <script src="js/tasks.js"></script>
