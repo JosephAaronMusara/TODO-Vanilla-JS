@@ -291,10 +291,28 @@ document.addEventListener("DOMContentLoaded", function () {
       )
       .map((user) => {
         const userTasks = tasks.filter((t) => t.userId === user.id);
-        const completedTasks = userTasks.filter((t) => t.completed).length;
-        const taskCompletionPercentage =
-          userTasks.length > 0 ? (completedTasks / userTasks.length) * 100 : 0;
-        return { fullName: user.fullName, taskCompletionPercentage };
+        const completedTasks = userTasks.filter((t) => t.completed);
+        //now adding the magic lol
+        const completedTasksCount = completedTasks.length;
+        const numOfTasks = userTasks.length;//
+        const completedOnTime = completedTasks.filter((t)=>{t.dueDate > t.dateCompleted});//
+        const completedOnTimeCount = completedOnTime.length;//
+        const completedAfterDueDate = completedTasks.filter(t=>t.dueDate < t.dateCompleted);
+        const assignedTasksCount = createdTasks.filter((t) => String(t.assignedTo) ===String(user.id)).length;
+
+        // console.log('user tasks', userTasks);
+        // console.log('completed tasks',completedTasks);
+        // console.log('completed count', completedTasksCount);
+        // console.log('num of tasks ',numOfTasks);
+        // console.log('completed on time' , completedOnTime);
+        // console.log('completed on time count ' , completedOnTimeCount);
+        // console.log('completed after time' , completedAfterDueDate);
+        // console.log('Assigned count' , assignedTasksCount);
+
+
+        //done with new magic lol
+        const taskCompletionPercentage = userTasks.length > 0 ? (completedTasksCount / numOfTasks) * 100 : 0;
+        return { fullName: user.fullName, taskCompletionPercentage ,completedTasksCount,numOfTasks, completedOnTimeCount, assignedTasksCount};
       });
 
     memberRanks.sort(
@@ -310,11 +328,18 @@ document.addEventListener("DOMContentLoaded", function () {
       nameCell.textContent = member.fullName;
       row.appendChild(nameCell);
 
+      console.log(member)
+
       const taskCompletionCell = document.createElement("td");
       taskCompletionCell.textContent = `${member.taskCompletionPercentage.toFixed(2)}%`;
       row.appendChild(taskCompletionCell);
 
       rankedMembersTable.appendChild(row)
+    });
+    const rankCriteria = document.getElementById('stats-select');
+    rankCriteria.addEventListener('change',()=>{
+      const rankCriteriaValue = rankCriteria.value;
+
     });
   }
   rankMembers();
