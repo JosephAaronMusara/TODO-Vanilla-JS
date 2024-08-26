@@ -298,6 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const completedOnTime = completedTasks.filter((t)=>{t.dueDate > t.dateCompleted});//
         const completedOnTimeCount = completedOnTime.length;//
         const completedAfterDueDate = completedTasks.filter(t=>t.dueDate < t.dateCompleted);
+        const afterDueCount = completedAfterDueDate.length;
         const assignedTasksCount = createdTasks.filter((t) => String(t.assignedTo) ===String(user.id)).length;
 
         // console.log('user tasks', userTasks);
@@ -312,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //done with new magic lol
         const taskCompletionPercentage = userTasks.length > 0 ? (completedTasksCount / numOfTasks) * 100 : 0;
-        return { fullName: user.fullName, taskCompletionPercentage ,completedTasksCount,numOfTasks, completedOnTimeCount, assignedTasksCount};
+        return { fullName: user.fullName, taskCompletionPercentage ,completedTasksCount,numOfTasks, completedOnTimeCount, assignedTasksCount, afterDueCount};
       });
 
     memberRanks.sort(
@@ -327,6 +328,26 @@ document.addEventListener("DOMContentLoaded", function () {
       const nameCell = document.createElement("td");
       nameCell.textContent = member.fullName;
       row.appendChild(nameCell);
+
+      const totalTasksCell = document.createElement("td");
+      totalTasksCell.textContent = member.numOfTasks;
+      row.appendChild(totalTasksCell);
+
+      const completedTasksCell = document.createElement("td");
+      completedTasksCell.textContent = member.completedTasksCount;
+      row.appendChild(completedTasksCell);
+
+      const onTimeCell = document.createElement("td");
+      onTimeCell.textContent = member.completedOnTimeCount;
+      row.appendChild(onTimeCell);
+
+      const afterDueCell = document.createElement("td");
+      afterDueCell.textContent = member.afterDueCount;
+      row.appendChild(afterDueCell);
+
+      const assignedCountCell = document.createElement("td");
+      assignedCountCell.textContent = member.assignedTasksCount;
+      row.appendChild(assignedCountCell);
 
       console.log(member)
 

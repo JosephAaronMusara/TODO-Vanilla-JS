@@ -128,25 +128,26 @@
 
             <section id="rank-members" class="content-section">
                 <h2>Member and Tasks Statistics</h2>
-                <p style="font-size: larger;">Not yet functional &#128514; <br>Working on it. Strugling with the thinking though &#128509;</p>
                 <div class="select-action">
                     <form >
                     <select name="stats" id="stats-select">
+                        <option value="rankMembers">Member Ranking</option>
                         <option value="completedTasks">Completed Tasks</option>
                         <option value="completedOnTime">Completed On Time</option>
                         <option value="completedAfterTime">Completed After Due Date</option>
-                        <option value="rankMembersByTasksCompleted">Rank Members By Tasks Completed</option>
-                        <option value="rankMembersByTasksCompletedOnTime">Rank Members By Tasks Completed On Time</option>
-                        <option value="rankMembersByTasksAssigned">Rank Members By Tasks Assigned</option>
-                        <option value="rankMembersByNumberOfTasks">Rank Members By Number Of Tasks</option>
                     </select>
                 </form>
                 </div>
                 <div class="table-container">
-                <table id="ranked-members">
+                <table id="ranked-members" style="font-size: small;">
                     <thead>
                         <tr>
                             <th>Full Name</th>
+                            <th>Total Tasks Created</th>
+                            <th>Completed Tasks</th>
+                            <th>Completed On Time</th>
+                            <th>Completed After Due Date</th>
+                            <th>Assigned Tasks</th>
                             <th>Task Completion %</th>
                         </tr>
                     </thead>
