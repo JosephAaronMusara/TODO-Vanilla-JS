@@ -127,32 +127,73 @@ document.addEventListener("DOMContentLoaded", function () {
         actionCell.appendChild(confirmBtn);
         actionCell.appendChild(editTaskBtn);
       });
+
+
+
+      const editButton = document.createElement("button");
+      editButton.textContent = "Edit";
+      editButton.classList.add("edit-btn");
+      editButton.dataset.taskId = task.id;
+
+      editButton.addEventListener("click", function () {
+        const editTaskForm = document.getElementById("edit-task-form");
+        const taskId = this.dataset.taskId;
+        const taskToEdit = createdTasks.find((t) => t.id === parseInt(taskId));
+
+        document.getElementById("admin-edit-task-text").value = taskToEdit.text;
+        document.getElementById("admin-edit-task-due-date").value = taskToEdit.dueDate.split("T")[0];
+
+        editTaskForm.classList.remove("hidden");
+
+        document.getElementById("save-task-btn").onclick = function () {
+          const newTaskText = document.getElementById("admin-edit-task-text").value;
+          const newDueDate = new Date(document.getElementById("admin-edit-task-due-date").value);
+
+          if (newDueDate < new Date()) {
+            showNotification("Due date cannot be in the past.");
+            return;
+          }
+
+          taskToEdit.text = newTaskText;
+          taskToEdit.dueDate = newDueDate.toISOString();
+
+          localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
+          editTaskForm.classList.add("hidden");
+
+          renderTaskList();
+          showNotification("Task updated successfully.");
+        };
+
+        document.getElementById("cancel-task-btn").onclick = function () {
+          editTaskForm.classList.add("hidden");
+        };
+      });
       
 
-      const editTaskBtn = document.createElement("button");
-      editTaskBtn.textContent = "Edit";
-      editTaskBtn.addEventListener('click',()=>{
-        document.getElementById('edit-task-form').classList.remove('hidden');
-        document.getElementById('admin-edit-task-text').value = task.text;
-        document.getElementById('admin-edit-task-due-date').value = task.dueDate;
-      });
+      // const editTaskBtn = document.createElement("button");
+      // editTaskBtn.textContent = "Edit";
+      // editTaskBtn.addEventListener('click',()=>{
+      //   document.getElementById('edit-task-form').classList.remove('hidden');
+      //   document.getElementById('admin-edit-task-text').value = task.text;
+      //   document.getElementById('admin-edit-task-due-date').value = task.dueDate;
+      // });
       actionCell.appendChild(assignBtn);
-      actionCell.appendChild(editTaskBtn);
+      actionCell.appendChild(editButton);
       row.appendChild(actionCell);
 
       taskListTable.appendChild(row);
     });
   }
-  const cancelTastEdit = document.getElementById('cancel-task-btn');
-  cancelTastEdit.addEventListener('click',()=>{
-    document.getElementById('edit-task-form').classList.add('hidden');
-  });
+  // const cancelTastEdit = document.getElementById('cancel-task-btn');
+  // cancelTastEdit.addEventListener('click',()=>{
+  //   document.getElementById('edit-task-form').classList.add('hidden');
+  // });
 
-  const saveTaskEdit = document.getElementById('save-task-btn');
-  saveTaskEdit.addEventListener('click',()=>{
-    document.getElementById('edit-task-form').classList.add('hidden');
-    alert('Unable to update tasks at the moment');
-  });
+  // const saveTaskEdit = document.getElementById('save-task-btn');
+  // saveTaskEdit.addEventListener('click',()=>{
+  //   document.getElementById('edit-task-form').classList.add('hidden');
+  //   alert('Unable to update tasks at the moment');
+  // });
 
   function renderAssignedTasks() {
     assignTasksTable.innerHTML = "";
