@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const afterDueCount = completedAfterDueDate.length;
         const assignedTasksCount = createdTasks.filter((t) => String(t.assignedTo) ===String(user.id)).length;
         const taskCompletionPercentage = userTasks.length > 0 ? (completedTasksCount / numOfTasks) * 100 : 0;
-        return { fullName: user.fullName, taskCompletionPercentage ,completedTasksCount,numOfTasks, completedOnTimeCount, assignedTasksCount, afterDueCount};
+        return { fullName: user.fullName, taskCompletionPercentage ,completedTasksCount,numOfTasks, completedOnTimeCount, assignedTasksCount, afterDueCount,completedTasks,completedOnTime,completedAfterDueDate};
       });
 
     memberRanks.sort(
@@ -339,33 +339,76 @@ document.addEventListener("DOMContentLoaded", function () {
       const taskCompletionCell = document.createElement("td");
       taskCompletionCell.textContent = `${member.taskCompletionPercentage.toFixed(2)}%`;
       row.appendChild(taskCompletionCell);
+//
+      rankedMembersTable.appendChild(row);
 
-      rankedMembersTable.appendChild(row)
-    });
-    const rankCriteria = document.getElementById('stats-select');
-    rankCriteria.addEventListener('change',()=>{
-      const rankCriteriaValue = rankCriteria.value;
       const statsTasksTable = document.getElementById('statsTasksTable');
-      
-      // switch(rankCriteriaValue){
-      //   case('rankMembers'):
-      //   rankedMembersTable.style.display = 'block';
-      //   break;
-      //   case('completedTasks'):
-      //   rankedMembersTable.style.display = 'none';
-      //   renderAllTasks(completedTasks,statsTasksTable);
-      //   break;
-      //   case('completedOnTime'):
-      //   rankedMembersTable.style.display = 'none';
-      //   renderAllTasks(completedOnTime,statsTasksTable);
-      //   break;
-      //   case('completedAfterTime'):
-      //   rankedMembersTable.style.display = 'none';
-      //   renderAllTasks(completedAfterDueDate,statsTasksTable);
-      //   break;
+      const rankCriteria = document.getElementById('stats-select');
+      rankCriteria.addEventListener('change',()=>{
+        const rankCriteriaValue = rankCriteria.value;
+        
+        switch(rankCriteriaValue){
+          case('rankMembers'):
+          rankedMembersTable.parentElement.style.display = 'block';
+          statsTasksTable.parentElement.style.display='none';
+          break;
+          case('completedTasks'):
+          rankedMembersTable.parentElement.style.display = 'none';
+          renderAllStatsTasks(member.completedTasks);
+          statsTasksTable.parentElement.style.display='block';
+          break;
+          case('completedOnTime'):
+          rankedMembersTable.parentElement.style.display = 'none';
+          renderAllStatsTasks(member.completedOnTime);
+          statsTasksTable.parentElement.style.display='block';
+          break;
+          case('completedAfterTime'):
+          rankedMembersTable.parentElement.style.display = 'none';
+          renderAllStatsTasks(member.completedAfterDueDate);
+          statsTasksTable.parentElement.style.display='block';
+          break;
+        }
+  
+      });
 
-      // }
-
+      const renderAllStatsTasks = (userTasks) => {
+        statsTasksTable.innerHTML = "";//will start debuging from here
+        userTasks.forEach((task) => {
+          const row = document.createElement("tr");
+    
+          const taskCell = document.createElement("td");
+          taskCell.textContent = task.text;
+          row.appendChild(taskCell);
+    
+          const taskForCell = document.createElement("td");
+          const assignedUser = users.find((user) => {
+            return String(user.id).trim() === String(task.userId).trim();
+          });
+    
+          taskForCell.textContent = assignedUser ? assignedUser.fullName : "N/A";
+          row.appendChild(taskForCell);
+    
+          const addedDateCell = document.createElement("td");
+          addedDateCell.textContent = new Date(task.dateAdded).toLocaleString();
+          row.appendChild(addedDateCell);
+    
+          const dueDateCell = document.createElement("td");
+          dueDateCell.textContent = new Date(task.dueDate).toLocaleString();
+          row.appendChild(dueDateCell);
+    
+          const isCompletedCell = document.createElement("td");
+          isCompletedCell.textContent = task.completed
+            ? "Completed"
+            : "Not Completed";
+          row.appendChild(isCompletedCell);
+    
+          const reasonCell = document.createElement("td");
+          reasonCell.textContent = task.reason;
+          row.appendChild(reasonCell);
+    
+          statsTasksTable.appendChild(row);
+        });
+      };
     });
   }
   rankMembers();
@@ -373,7 +416,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //Admin view all tasks ---currently working on this
   const taskSearchInput = document.getElementById("taskSearchInput");
   const renderAllTasks = (tasks,tableName) => {
-    allTasksTable.innerHTML = "";
+    tableName.innerHTML = "";
     tasks.forEach((task) => {
       const row = document.createElement("tr");
 
