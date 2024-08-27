@@ -501,36 +501,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   //cont rend
-  const viewWhatSelect = document.getElementById('view-what-select');
+  // const viewWhatSelect = document.getElementById('view-what-select');
 
-  viewWhatSelect.addEventListener("change", function () {
-    const selectedValue = viewWhatSelect.value;
+  // viewWhatSelect.addEventListener("change", function () {
+  //   const selectedValue = viewWhatSelect.value;
 
-    // createTaskForm.style.display = "none";
-    taskListTable.parentElement.style.display = "none";
-    assignTasksTable.parentElement.style.display = "none";
-    allTasksTable.parentElement.style.display = "none";
+  //   // createTaskForm.style.display = "none";
+  //   taskListTable.parentElement.style.display = "none";
+  //   assignTasksTable.parentElement.style.display = "none";
+  //   allTasksTable.parentElement.style.display = "none";
 
-    switch (selectedValue) {
-      // case "CreateTask":
-      //   createTaskForm.style.display = "block";
-      //   break;
-      case "AssignedTasks":
-        assignTasksTable.parentElement.style.display = "block";
-        renderAssignedTasks();
-        break;
-      case "AllCreatedTasks":
-        taskListTable.parentElement.style.display = "block";
-        renderTaskList();
-        break;
-      case "AllUserTasks":
-        allTasksTable.parentElement.style.display = "block";
-        renderAllTasks(tasks);
-        break;
-    }
-  });
+  //   switch (selectedValue) {
+  //     // case "CreateTask":
+  //     //   createTaskForm.style.display = "block";
+  //     //   break;
+  //     case "AssignedTasks":
+  //       assignTasksTable.parentElement.style.display = "block";
+  //       renderAssignedTasks();
+  //       break;
+  //     case "AllCreatedTasks":
+  //       taskListTable.parentElement.style.display = "block";
+  //       renderTaskList();
+  //       break;
+  //     case "AllUserTasks":
+  //       allTasksTable.parentElement.style.display = "block";
+  //       renderAllTasks(tasks);
+  //       break;
+  //   }
+  // });
 
-  viewWhatSelect.dispatchEvent(new Event("change"));
+  // viewWhatSelect.dispatchEvent(new Event("change"));
 
 function overView(){
   const totalTasks = createdTasks.length;
