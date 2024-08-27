@@ -130,8 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
         actionCell.appendChild(editTaskBtn);
       });
 
-
-
       const editButton = document.createElement("button");
       editButton.textContent = "Edit";
       editButton.classList.add("edit-btn");
@@ -171,7 +169,6 @@ document.addEventListener("DOMContentLoaded", function () {
         };
       });
       
-
       // const editTaskBtn = document.createElement("button");
       // editTaskBtn.textContent = "Edit";
       // editTaskBtn.addEventListener('click',()=>{
@@ -282,7 +279,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Update assigned tasks every minute to reflect time remaining
   setInterval(renderAssignedTasks, 60000);
 
-  // Rank members based on completed tasks %
   function rankMembers() {
     const memberRanks = users
       .filter(
@@ -294,7 +290,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .map((user) => {
         const userTasks = tasks.filter((t) => t.userId === user.id);
         const completedTasks = userTasks.filter((t) => t.completed);
-        //now adding the magic lol
         const completedTasksCount = completedTasks.length;
         const numOfTasks = userTasks.length;//
         const completedOnTime = completedTasks.filter((t)=>{t.dueDate > t.dateCompleted});//
@@ -302,18 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const completedAfterDueDate = completedTasks.filter(t=>t.dueDate < t.dateCompleted);
         const afterDueCount = completedAfterDueDate.length;
         const assignedTasksCount = createdTasks.filter((t) => String(t.assignedTo) ===String(user.id)).length;
-
-        // console.log('user tasks', userTasks);
-        // console.log('completed tasks',completedTasks);
-        // console.log('completed count', completedTasksCount);
-        // console.log('num of tasks ',numOfTasks);
-        // console.log('completed on time' , completedOnTime);
-        // console.log('completed on time count ' , completedOnTimeCount);
-        // console.log('completed after time' , completedAfterDueDate);
-        // console.log('Assigned count' , assignedTasksCount);
-
-
-        //done with new magic lol
         const taskCompletionPercentage = userTasks.length > 0 ? (completedTasksCount / numOfTasks) * 100 : 0;
         return { fullName: user.fullName, taskCompletionPercentage ,completedTasksCount,numOfTasks, completedOnTimeCount, assignedTasksCount, afterDueCount};
       });
@@ -498,39 +481,6 @@ document.addEventListener("DOMContentLoaded", function () {
       userManagementTable.appendChild(row);
     })
   };
-
-
-  //cont rend
-  // const viewWhatSelect = document.getElementById('view-what-select');
-
-  // viewWhatSelect.addEventListener("change", function () {
-  //   const selectedValue = viewWhatSelect.value;
-
-  //   // createTaskForm.style.display = "none";
-  //   taskListTable.parentElement.style.display = "none";
-  //   assignTasksTable.parentElement.style.display = "none";
-  //   allTasksTable.parentElement.style.display = "none";
-
-  //   switch (selectedValue) {
-  //     // case "CreateTask":
-  //     //   createTaskForm.style.display = "block";
-  //     //   break;
-  //     case "AssignedTasks":
-  //       assignTasksTable.parentElement.style.display = "block";
-  //       renderAssignedTasks();
-  //       break;
-  //     case "AllCreatedTasks":
-  //       taskListTable.parentElement.style.display = "block";
-  //       renderTaskList();
-  //       break;
-  //     case "AllUserTasks":
-  //       allTasksTable.parentElement.style.display = "block";
-  //       renderAllTasks(tasks);
-  //       break;
-  //   }
-  // });
-
-  // viewWhatSelect.dispatchEvent(new Event("change"));
 
 function overView(){
   const totalTasks = createdTasks.length;
