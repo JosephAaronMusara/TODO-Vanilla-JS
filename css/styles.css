@@ -287,6 +287,23 @@ input[type="text"] {
     background-color: #e60000; 
 }
 
+#createTaskBtn{
+    position: absolute;
+    top: 20px; 
+    right: 20px; 
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#createTaskBtn:hover{
+    background-color: #0056b3;
+}
+
 /* tables */
 .table-container {
     position: relative;

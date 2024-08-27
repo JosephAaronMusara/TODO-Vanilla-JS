@@ -42,17 +42,18 @@
 
             <section id="manage-tasks" class="content-section">
                 <h2>TASKS</h2>
+                <button id="createTaskBtn">Create Task</button>
                 <div class="select-action">
                     <form >
                     <select name="view-what" id="view-what-select">
                         <option value="AssignedTasks">Assigned Tasks</option>
                         <option value="AllCreatedTasks">All Created Tasks</option>
-                        <option value="CreateTask">Create Task</option>
+                        <!-- <option value="CreateTask">Create Task</option> -->
                         <option value="AllUserTasks">All User Tasks</option>
                     </select>
                 </form>
                 </div>
-                <form id="createTaskForm">
+                <form id="createTaskForm" class="hidden">
                     <input type="text" id="taskInput" placeholder="Task Description" required>
                     <input type="datetime-local" id="dueDateInput" required>
                     <button type="submit">Create Task</button>

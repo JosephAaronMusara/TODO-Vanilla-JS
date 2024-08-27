@@ -76,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderTaskList();
     showNotification("Task created successfully.");
+    createTaskForm.classList.add('hidden');
+    assignTasksTable.parentElement.style.display = "block";
   });
 
   function renderTaskList() {
@@ -407,6 +409,14 @@ document.addEventListener("DOMContentLoaded", function () {
   };
   renderAllTasks(tasks);
 
+  const adminCreateTaskBtn = document.getElementById('createTaskBtn');
+  adminCreateTaskBtn.addEventListener('click',()=>{
+    taskListTable.parentElement.style.display = "none";
+    assignTasksTable.parentElement.style.display = "none";
+    allTasksTable.parentElement.style.display = "none";
+    createTaskForm.classList.remove('hidden');
+  });
+
   //filter tasks
   // taskSearchInput.addEventListener("input", (e) => {
   //   e.preventDefault();
@@ -496,15 +506,15 @@ document.addEventListener("DOMContentLoaded", function () {
   viewWhatSelect.addEventListener("change", function () {
     const selectedValue = viewWhatSelect.value;
 
-    createTaskForm.style.display = "none";
+    // createTaskForm.style.display = "none";
     taskListTable.parentElement.style.display = "none";
     assignTasksTable.parentElement.style.display = "none";
     allTasksTable.parentElement.style.display = "none";
 
     switch (selectedValue) {
-      case "CreateTask":
-        createTaskForm.style.display = "block";
-        break;
+      // case "CreateTask":
+      //   createTaskForm.style.display = "block";
+      //   break;
       case "AssignedTasks":
         assignTasksTable.parentElement.style.display = "block";
         renderAssignedTasks();
