@@ -44,7 +44,7 @@
                 <h2>TASKS</h2>
                 <button id="createTaskBtn">Create Task</button>
 
-                <div class="tab">
+                <div id="tab" class="tab">
                     <button class="tablinks active" onclick="openTab(event, 'AssignedTasks')">
                         Assigned Tasks
                     </button>
@@ -162,6 +162,21 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                </div>
+                <div id="statsTasks" class="table-container hidden">
+                    <table id="statsTasksTable">
+                        <thead>
+                            <tr>
+                                <th>Task Description</th>
+                                <th>Member</th>
+                                <th>Created On</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </section>            
 

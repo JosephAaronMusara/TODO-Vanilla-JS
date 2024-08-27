@@ -345,7 +345,7 @@ input[type="text"] {
 .tab {
     overflow: hidden;
     border-bottom: 1px solid #ddd;
-    background-color: #007BFF;
+    background-color: #020508;
     display: flex;
 }
 

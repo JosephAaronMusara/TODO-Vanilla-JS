@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTaskList();
     showNotification("Task created successfully.");
     createTaskForm.classList.add('hidden');
-    assignTasksTable.parentElement.style.display = "block";
+    document.getElementById('AssignedTasks').classList.add("active");
   });
 
   function renderTaskList() {
@@ -345,6 +345,26 @@ document.addEventListener("DOMContentLoaded", function () {
     const rankCriteria = document.getElementById('stats-select');
     rankCriteria.addEventListener('change',()=>{
       const rankCriteriaValue = rankCriteria.value;
+      const statsTasksTable = document.getElementById('statsTasksTable');
+      
+      // switch(rankCriteriaValue){
+      //   case('rankMembers'):
+      //   rankedMembersTable.style.display = 'block';
+      //   break;
+      //   case('completedTasks'):
+      //   rankedMembersTable.style.display = 'none';
+      //   renderAllTasks(completedTasks,statsTasksTable);
+      //   break;
+      //   case('completedOnTime'):
+      //   rankedMembersTable.style.display = 'none';
+      //   renderAllTasks(completedOnTime,statsTasksTable);
+      //   break;
+      //   case('completedAfterTime'):
+      //   rankedMembersTable.style.display = 'none';
+      //   renderAllTasks(completedAfterDueDate,statsTasksTable);
+      //   break;
+
+      // }
 
     });
   }
@@ -352,7 +372,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //Admin view all tasks ---currently working on this
   const taskSearchInput = document.getElementById("taskSearchInput");
-  const renderAllTasks = (tasks) => {
+  const renderAllTasks = (tasks,tableName) => {
     allTasksTable.innerHTML = "";
     tasks.forEach((task) => {
       const row = document.createElement("tr");
@@ -387,16 +407,17 @@ document.addEventListener("DOMContentLoaded", function () {
       reasonCell.textContent = task.reason;
       row.appendChild(reasonCell);
 
-      allTasksTable.appendChild(row);
+      tableName.appendChild(row);
     });
   };
-  renderAllTasks(tasks);
+  renderAllTasks(tasks,allTasksTable);
 
   const adminCreateTaskBtn = document.getElementById('createTaskBtn');
   adminCreateTaskBtn.addEventListener('click',()=>{
-    taskListTable.parentElement.style.display = "none";
-    assignTasksTable.parentElement.style.display = "none";
-    allTasksTable.parentElement.style.display = "none";
+    document.getElementById('tab').style.display='none';
+    document.getElementById('AssignedTasks').classList.remove("active");
+    document.getElementById('userTasks').style.display='none';
+    document.getElementById('createdTasks').style.display='none';
     createTaskForm.classList.remove('hidden');
   });
 
