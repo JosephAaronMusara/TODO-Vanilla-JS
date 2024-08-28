@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link href="DataTables/datatables.min.css" rel="stylesheet">
+    <script src="DataTables/datatables.min.js"></script>
+
 </head>
 <body>
     <script>
@@ -22,12 +25,29 @@
                 <ul>
                     <li><a href="#overview" data-section="overview">Overview</a></li>
                     <li><a href="#manage-members" data-section="manage-members">Members</a></li>
-                    <li><a href="#manage-tasks" data-section="manage-tasks">Tasks</a></li>
+                    <li id="wanted"><a href="#manage-tasks" data-section="manage-tasks">Tasks</a></li>
                     <li><a href="#rank-members" data-section="rank-members">Statistics</a></li>
                     <li><button id="logout-btn">Logout</button></li>
                 </ul>
             </nav>
         </aside>
+        <script>
+            $(document).ready( function () {
+            $('#allTasksTable').DataTable();
+            } );
+            $(document).ready( function () {
+            $('#taskListTable').DataTable();
+            } );
+            $(document).ready( function () {
+            $('#assign-tasks').DataTable();
+            } );
+            $(document).ready( function () {
+            $('#member-management').DataTable();
+            } );
+            $(document).ready( function () {
+            $('#ranked-members').DataTable();
+            } );
+        </script>
         <main id="main-content">
             <section id="overview" class="content-section active">
                 <h2>Overview</h2>
@@ -137,7 +157,7 @@
 
             <section id="rank-members" class="content-section">
                 <h2>Member and Tasks Statistics</h2>
-                <div class="select-action">
+                <!-- <div class="select-action">
                     <form >
                     <select name="stats" id="stats-select">
                         <option value="rankMembers">Member Ranking</option>
@@ -146,7 +166,7 @@
                         <option value="completedAfterTime">Completed After Due Date</option>
                     </select>
                 </form>
-                </div>
+                </div> -->
                 <div class="table-container">
                 <table id="ranked-members" style="font-size: small;">
                     <thead>

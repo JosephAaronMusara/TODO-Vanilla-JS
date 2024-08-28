@@ -305,7 +305,7 @@ input[type="text"] {
 /* tables */
 .table-container {
     position: relative;
-    height: 400px; 
+    height: 500px; 
     overflow-y: auto;
     margin-bottom: 20px;
 }
@@ -391,6 +391,6 @@ input[type="text"] {
   }
   .inactive:after {
     content: ' ▲';
-    color: gray;
+    color: rgb(212, 8, 8);
     opacity: 0.5;
   }

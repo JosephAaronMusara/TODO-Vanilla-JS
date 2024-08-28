@@ -77,6 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTaskList();
     showNotification("Task created successfully.");
     createTaskForm.classList.add('hidden');
+    document.getElementById('tab').style.display='block';
     document.getElementById('AssignedTasks').classList.add("active");
   });
 
@@ -334,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
       assignedCountCell.textContent = member.assignedTasksCount;
       row.appendChild(assignedCountCell);
 
-      console.log(member)
+      // console.log(member)
 
       const taskCompletionCell = document.createElement("td");
       taskCompletionCell.textContent = `${member.taskCompletionPercentage.toFixed(2)}%`;
@@ -414,7 +415,6 @@ document.addEventListener("DOMContentLoaded", function () {
   rankMembers();
 
   //Admin view all tasks ---currently working on this
-  const taskSearchInput = document.getElementById("taskSearchInput");
   const renderAllTasks = (tasks,tableName) => {
     tableName.innerHTML = "";
     tasks.forEach((task) => {
@@ -465,6 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   //filter tasks
+  // const taskSearchInput = document.getElementById("taskSearchInput");
   // taskSearchInput.addEventListener("input", (e) => {
   //   e.preventDefault();
   //   const searchValue = e.target.value.toLowerCase();
