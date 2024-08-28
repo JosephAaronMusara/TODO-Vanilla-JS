@@ -151,19 +151,19 @@
                 <table id="ranked-members" style="font-size: small;">
                     <thead>
                         <tr>
-                            <th>Full Name</th>
-                            <th>Total Tasks Created</th>
-                            <th>Completed Tasks</th>
-                            <th>Completed On Time</th>
-                            <th>Completed After Due Date</th>
-                            <th>Assigned Tasks</th>
-                            <th>Task Completion %</th>
+                            <th onclick="sortTable(0)">Full Name<span id="arrow0" class="inactive"></span></th>
+                            <th onclick="sortTable(1)">Total Tasks Created<span id="arrow1" class="inactive"></span></th>
+                            <th onclick="sortTable(2)">Completed Tasks<span id="arrow2" class="inactive"></span></th>
+                            <th onclick="sortTable(3)">Completed On Time<span id="arrow3" class="inactive"></span></th>
+                            <th onclick="sortTable(4)">Completed After Due Date<span id="arrow4" class="inactive"></span></th>
+                            <th onclick="sortTable(5)">Assigned Tasks<span id="arrow5" class="inactive"></span></th>
+                            <th onclick="sortTable(6)">Task Completion %<span id="arrow6" class="inactive"></span></th>
                         </tr>
                     </thead>
                     <tbody></tbody>
                 </table>
                 </div>
-                <div id="statsTasks" class="table-container hidden">
+                <!-- <div id="statsTasks" class="table-container hidden">
                     <table id="statsTasksTable">
                         <thead>
                             <tr>
@@ -177,7 +177,7 @@
                         </thead>
                         <tbody></tbody>
                     </table>
-                </div>
+                </div> -->
             </section>            
 
         </main>
@@ -199,6 +199,32 @@
             document.getElementById(tabName).style.display = "block";
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.className += " active";
+        }
+    </script>
+    <script>
+        let sortOrder = [];
+
+        function sortTable(columnIndex) {
+        const table = document.getElementById('ranked-members');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        sortOrder[columnIndex] = (sortOrder[columnIndex] === 'asc') ? 'desc' : 'asc';
+
+        for (let i = 0; i < table.rows[0].cells.length; i++) {
+            const arrow = document.getElementById('arrow' + i);
+            arrow.className = (i === columnIndex) ? sortOrder[columnIndex] : 'inactive';
+        }
+
+        rows.sort((a,b) => {
+            const aValue = a.children[columnIndex].textContent.trim();
+            const bValue = b.children[columnIndex].textContent.trim();
+            return sortOrder[columnIndex] === 'asc'
+            ? aValue.localeCompare(bValue, undefined, {numeric: true, sensitivity: 'base'})
+            : bValue.localeCompare(aValue, undefined, {numeric: true, sensitivity: 'base'});
+        });
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
         }
     </script>
 </body>

@@ -381,3 +381,16 @@ input[type="text"] {
 .tabcontent.active {
     display: block;
 }
+
+.desc:after {
+    content: ' ▼';
+  }
+
+  .asc:after {
+    content: ' ▲';
+  }
+  .inactive:after {
+    content: ' ▲';
+    color: gray;
+    opacity: 0.5;
+  }
