@@ -1,267 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link href="DataTables/datatables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="DataTables/datatables.min.css" rel="stylesheet">
     <script src="DataTables/datatables.min.js"></script>
-  </head>
-  <body>
+
+</head>
+<body>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-        if (loggedInUser !== "admin") {
-          window.location.href = "login.html";
-        }
-      });
+        document.addEventListener('DOMContentLoaded', function() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            if (loggedInUser !== 'admin') {
+                window.location.href = 'login.html';
+            }
+        });
     </script>
     <div id="admin-dashboard">
-      <aside id="side-nav">
-        <h2>Admin Dashboard</h2>
-        <nav>
-          <ul>
-            <li><a href="#overview" data-section="overview">Overview</a></li>
-            <li>
-              <a href="#manage-members" data-section="manage-members"
-                >Members</a
-              >
-            </li>
-            <li id="wanted">
-              <a href="#manage-tasks" data-section="manage-tasks">Tasks</a>
-            </li>
-            <li>
-              <a href="#rank-members" data-section="rank-members">Statistics</a>
-            </li>
-            <li><button id="logout-btn">Logout</button></li>
-          </ul>
-        </nav>
-      </aside>
-      <main id="main-content">
-        <section id="overview" class="content-section active">
-          <h2>Overview</h2>
-          <div class="chart-container">
-            <canvas id="tasksChart"></canvas>
-          </div>
+        <aside id="side-nav">
+            <h2>Admin Dashboard</h2>
+            <nav>
+                <ul>
+                    <li><a href="#overview" data-section="overview">Overview</a></li>
+                    <li><a href="#manage-members" data-section="manage-members">Members</a></li>
+                    <li id="wanted"><a href="#manage-tasks" data-section="manage-tasks">Tasks</a></li>
+                    <li><a href="#rank-members" data-section="rank-members">Statistics</a></li>
+                    <li><button id="logout-btn">Logout</button></li>
+                </ul>
+            </nav>
+        </aside>
+        <main id="main-content">
+            <section id="overview" class="content-section active">
+                <h2>Overview</h2>
+                <div class="chart-container">
+                    <canvas id="tasksChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="membersChart"></canvas>
+                </div>
+            </section>
 
-          <div class="chart-container">
-            <canvas id="membersChart"></canvas>
-          </div>
-        </section>
+            <section id="manage-tasks" class="content-section">
+                <h2>TASKS</h2>
+                <button id="createTaskBtn">Create Task</button>
 
-        <section id="manage-tasks" class="content-section">
-          <h2>TASKS</h2>
-          <button id="createTaskBtn">Create Task</button>
+                <div id="tab" class="tab">
+                    <button class="tablinks active" onclick="openTab(event, 'AssignedTasks')">
+                        Assigned Tasks
+                    </button>
+                    <button class="tablinks" onclick="openTab(event, 'createdTasks')">
+                        Created Tasks
+                    </button>
+                    <button class="tablinks" onclick="openTab(event, 'userTasks')">
+                        User Tasks
+                    </button>
+                </div>
+                <form id="createTaskForm" class="hidden">
+                    <input type="text" id="taskInput" placeholder="Task Description" required>
+                    <input type="datetime-local" id="dueDateInput" required>
+                    <button type="submit">Create Task</button>
+                </form>
+                <div class="table-container">
 
-          <div id="tab" class="tab">
-            <button
-              class="tablinks active"
-              onclick="openTab(event, 'AssignedTasks')"
-            >
-              Assigned Tasks
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'createdTasks')">
-              Created Tasks
-            </button>
-            <button class="tablinks" onclick="openTab(event, 'userTasks')">
-              User Tasks
-            </button>
-          </div>
-          <form id="createTaskForm" class="hidden">
-            <input
-              type="text"
-              id="taskInput"
-              placeholder="Task Description"
-              required
-            />
-            <input type="datetime-local" id="dueDateInput" required />
-            <button type="submit">Create Task</button>
-          </form>
-          <div class="table-container">
-            <div id="edit-task-form" class="edit-task-form hidden">
-              <input type="text" id="edit-task-text" placeholder="Task text" />
-              <input type="date" id="edit-task-due-date" />
-              <button id="save-task-btn">Save</button>
-              <button id="cancel-task-btn">Cancel</button>
-            </div>
-            <div id="createdTasks" class="tabcontent">
-              <table id="taskListTable">
+        <div id="edit-task-form" class="edit-task-form hidden">
+            <input type="text" id="edit-task-text" placeholder="Task text">
+            <input type="date" id="edit-task-due-date">
+            <button id="save-task-btn">Save</button>
+            <button id="cancel-task-btn">Cancel</button>
+        </div>
+        <div id="createdTasks" class="tabcontent">
+            <table id="taskListTable">
                 <thead>
-                  <tr>
-                    <th>Task</th>
-                    <th>Due Date</th>
-                    <th>Action</th>
-                  </tr>
+                    <tr>
+                        <th>Task</th>
+                        <th>Due Date</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
-              </table>
-            </div>
-            <div id="AssignedTasks" class="tabcontent active">
-              <table id="assign-tasks">
-                <thead>
-                  <tr>
-                    <th>Task</th>
-                    <th>Assigned To</th>
-                    <th>Due Date</th>
-                    <th>Time Remaining</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <div id="userTasks" class="tabcontent">
-              <table id="allTasksTable">
-                <thead>
-                  <tr>
-                    <th>Task Description</th>
-                    <th>Member</th>
-                    <th>Created On</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Reason</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-            <div id="edit-task-form" class="edit-task-form hidden">
-              <input
-                type="text"
-                id="admin-edit-task-text"
-                placeholder="Task text"
-              />
-              <input type="date" id="admin-edit-task-due-date" />
-              <button id="save-task-btn">Save</button>
-              <button id="cancel-task-btn">Cancel</button>
-            </div>
-          </div>
-        </section>
-
-        <section id="manage-members" class="content-section">
-          <h2>Manage Members</h2>
-          <div class="table-container">
-            <table id="member-management">
-              <thead>
-                <tr>
-                  <th>Full Name</th>
-                  <th>Email</th>
-                  <th>Active</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody></tbody>
             </table>
-          </div>
-        </section>
+        </div>
+              <div id="AssignedTasks" class="tabcontent active">
+                <table id="assign-tasks">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Assigned To</th>
+                            <th>Due Date</th>
+                            <th>Time Remaining</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+              </div>      
+                    <div id="userTasks" class="tabcontent">
+                        <table id="allTasksTable">
+                            <thead>
+                                <tr>
+                                    <th>Task Description</th>
+                                    <th>Member</th>
+                                    <th>Created On</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div id="edit-task-form" class="edit-task-form hidden">
+                        <input type="text" id="admin-edit-task-text" placeholder="Task text">
+                        <input type="date" id="admin-edit-task-due-date">
+                        <button id="save-task-btn">Save</button>
+                        <button id="cancel-task-btn">Cancel</button>
+                    </div>
+                </div>
+            </section>
 
-        <section id="rank-members" class="content-section">
-          <h2>Member and Tasks Statistics</h2>
-          <div class="table-container">
-            <table id="ranked-members" style="font-size: small">
-              <thead>
-                <tr>
-                  <th onclick="sortTable(0)">
-                    Full Name<span id="arrow0" class="inactive"></span>
-                  </th>
-                  <th onclick="sortTable(1)">
-                    Total Tasks Created<span
-                      id="arrow1"
-                      class="inactive"
-                    ></span>
-                  </th>
-                  <th onclick="sortTable(2)">
-                    Completed Tasks<span id="arrow2" class="inactive"></span>
-                  </th>
-                  <th onclick="sortTable(3)">
-                    Completed On Time<span id="arrow3" class="inactive"></span>
-                  </th>
-                  <th onclick="sortTable(4)">
-                    Completed After Due Date<span
-                      id="arrow4"
-                      class="inactive"
-                    ></span>
-                  </th>
-                  <th onclick="sortTable(5)">
-                    Assigned Tasks<span id="arrow5" class="inactive"></span>
-                  </th>
-                  <th onclick="sortTable(6)">
-                    Task Completion %<span id="arrow6" class="inactive"></span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </section>
-      </main>
+            <section id="manage-members" class="content-section">
+                <h2>Manage Members</h2>
+                <div class="table-container">
+                <table id="member-management">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Active</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </section>
+
+            <section id="rank-members" class="content-section">
+                <h2>Member and Tasks Statistics</h2>
+                <div class="table-container">
+                <table id="ranked-members" style="font-size: small;">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">Full Name<span id="arrow0" class="inactive"></span></th>
+                            <th onclick="sortTable(1)">Total Tasks Created<span id="arrow1" class="inactive"></span></th>
+                            <th onclick="sortTable(2)">Completed Tasks<span id="arrow2" class="inactive"></span></th>
+                            <th onclick="sortTable(3)">Completed On Time<span id="arrow3" class="inactive"></span></th>
+                            <th onclick="sortTable(4)">Completed After Due Date<span id="arrow4" class="inactive"></span></th>
+                            <th onclick="sortTable(5)">Assigned Tasks<span id="arrow5" class="inactive"></span></th>
+                            <th onclick="sortTable(6)">Task Completion %<span id="arrow6" class="inactive"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </section>            
+
+        </main>
     </div>
     <script src="js/chart.js"></script>
     <script src="js/admin-script.js" type="module"></script>
     <script>
-      function openTab(evt, tabName) {
+        function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-          tabcontent[i].classList.remove("active");
+            tabcontent[i].style.display = "none";
+            tabcontent[i].classList.remove("active");
         }
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
         document.getElementById(tabName).style.display = "block";
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.className += " active";
-      }
-      let sortOrder = [];
+}
 
-      function sortTable(columnIndex) {
-        const table = document.getElementById("ranked-members");
-        const tbody = table.querySelector("tbody");
-        const rows = Array.from(tbody.querySelectorAll("tr"));
+        let sortOrder = [];
 
-        sortOrder[columnIndex] =
-          sortOrder[columnIndex] === "asc" ? "desc" : "asc";
+        function sortTable(columnIndex) {
+        const table = document.getElementById('ranked-members');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        sortOrder[columnIndex] = (sortOrder[columnIndex] === 'asc') ? 'desc' : 'asc';
 
         for (let i = 0; i < table.rows[0].cells.length; i++) {
-          const arrow = document.getElementById("arrow" + i);
-          arrow.className =
-            i === columnIndex ? sortOrder[columnIndex] : "inactive";
+            const arrow = document.getElementById('arrow' + i);
+            arrow.className = (i === columnIndex) ? sortOrder[columnIndex] : 'inactive';
         }
 
-        rows.sort((a, b) => {
-          const aValue = a.children[columnIndex].textContent.trim();
-          const bValue = b.children[columnIndex].textContent.trim();
-          return sortOrder[columnIndex] === "asc"
-            ? aValue.localeCompare(bValue, undefined, {
-                numeric: true,
-                sensitivity: "base",
-              })
-            : bValue.localeCompare(aValue, undefined, {
-                numeric: true,
-                sensitivity: "base",
-              });
+        rows.sort((a,b) => {
+            const aValue = a.children[columnIndex].textContent.trim();
+            const bValue = b.children[columnIndex].textContent.trim();
+            return sortOrder[columnIndex] === 'asc'
+            ? aValue.localeCompare(bValue, undefined, {numeric: true, sensitivity: 'base'})
+            : bValue.localeCompare(aValue, undefined, {numeric: true, sensitivity: 'base'});
         });
-        tbody.innerHTML = "";
-        rows.forEach((row) => tbody.appendChild(row));
-      }
-      $(document).ready(function () {
-        $("#allTasksTable").DataTable();
-      });
-      $(document).ready(function () {
-        $("#taskListTable").DataTable();
-      });
-      $(document).ready(function () {
-        $("#assign-tasks").DataTable();
-      });
-      $(document).ready(function () {
-        $("#member-management").DataTable();
-      });
-      $(document).ready(function () {
-        $("#ranked-members").DataTable();
-      });
+        tbody.innerHTML = '';
+        rows.forEach(row => tbody.appendChild(row));
+        }
+        $(document).ready(function () {
+    $("#allTasksTable").DataTable();
+  });
+  $(document).ready(function () {
+    $("#taskListTable").DataTable();
+  });
+  $(document).ready(function () {
+    $("#assign-tasks").DataTable();
+  });
+  $(document).ready(function () {
+    $("#member-management").DataTable();
+  });
+  $(document).ready(function () {
+    $("#ranked-members").DataTable();
+  });
     </script>
-  </body>
+</body>
 </html>
