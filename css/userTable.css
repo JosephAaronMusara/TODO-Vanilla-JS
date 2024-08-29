@@ -1,37 +1,38 @@
-.usertable-container{
-    margin-top: 500px;
-    height: 400px; 
-    overflow-y: auto;
-    margin-bottom: 20px;    
+.usertable-container {
+  margin-top: 500px;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 20px;
 }
 
 .usertable-container table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
-.usertable-container th, .usertable-container td {
-    padding: 12px 15px;
-    text-align: left;
-    flex: auto;
-    border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+.usertable-container th,
+.usertable-container td {
+  padding: 12px 15px;
+  text-align: left;
+  flex: auto;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
-.usertable-container td button{
-    margin-right: 15px;
+.usertable-container td button {
+  margin-right: 15px;
 }
 
 .usertable-container thead th {
-    position: sticky;
-    top: 0;
-    background-color: #007BFF;
-    color: white;
-    border-bottom: 2px solid #ddd;
+  position: sticky;
+  top: 0;
+  background-color: #007bff;
+  color: white;
+  border-bottom: 2px solid #ddd;
 }
 
 .usertable-container tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 .usertable-container tbody tr:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
