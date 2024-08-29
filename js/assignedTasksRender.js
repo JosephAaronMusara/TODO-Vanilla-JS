@@ -43,7 +43,7 @@ export function renderAssignedTasks() {
           task.completed = true;
           localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
           renderAssignedTasks();
-          showNotification("Task marked as completed.");
+          alert("Task marked as completed.");
         });
         if (task.completed) {
           completeBtn.disabled = true;

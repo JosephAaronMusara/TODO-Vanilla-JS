@@ -1,7 +1,7 @@
 export function rankMembers() {
     const users = JSON.parse(localStorage.getItem('users')) || [];
     const tasks = JSON.parse(localStorage.getItem('userTasks')) || [];
-    const createdTasks = JSON.parse(localStorage.getItem('createdTasks')) || [];    
+    const createdTasks = JSON.parse(localStorage.getItem('createdTasks')) || []; 
     const rankedMembersTable = document.getElementById("ranked-members").querySelector("tbody");
     const memberRanks = users
       .filter(
