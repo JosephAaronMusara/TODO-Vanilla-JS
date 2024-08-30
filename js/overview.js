@@ -23,7 +23,10 @@ export function overView() {
     (user) =>
       user.approved && user.type === "organization" && user.role === "regular"
   ).length;
-  const inactiveMembers = users.length - activeMembers;
+  const inactiveMembers = users.filter(
+    (user)=>
+      user.type === "organization" && user.role !== "admin"
+  ).length - activeMembers;
 
   const membersData = {
     labels: ["Active", "Inactive"],
