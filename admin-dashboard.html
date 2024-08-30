@@ -58,11 +58,17 @@
                         User Tasks
                     </button>
                 </div>
-                <form id="createTaskForm" class="hidden">
-                    <input type="text" id="taskInput" placeholder="Task Description" required>
-                    <input type="datetime-local" id="dueDateInput" required>
-                    <button type="submit">Create Task</button>
-                </form>
+                <div id="createTaskModal" class="modal hidden">
+                    <div class="modal-content">
+                      <span class="close">&times;</span>
+                      <form id="createTaskForm">
+                        <input type="text" id="taskInput" placeholder="Task Description" required>
+                        <input type="datetime-local" id="dueDateInput" required>
+                        <button type="submit">Create Task</button>
+                      </form>
+                    </div>
+                  </div>
+                  
                 <div class="table-container">
 
         <div id="edit-task-form" class="edit-task-form hidden">

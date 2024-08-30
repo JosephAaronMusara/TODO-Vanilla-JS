@@ -43,6 +43,25 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("allTasksTable")
     .querySelector("tbody");
 
+  const createTaskModal = document.getElementById("createTaskModal");
+  const createTaskBtn = document.getElementById("createTaskBtn");
+  const closeModal = document.querySelector(".close");
+
+  createTaskBtn.addEventListener("click", function () {
+    createTaskModal.style.display = "block";
+  });
+
+  closeModal.addEventListener("click", function () {
+    createTaskModal.style.display = "none";
+  });
+
+  // Hide modal if we click outsd of it
+  window.addEventListener("click", function (event) {
+    if (event.target === createTaskModal) {
+      createTaskModal.style.display = "none";
+    }
+  });
+
   const createTaskForm = document.getElementById("createTaskForm");
   createTaskForm.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -51,11 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const taskText = taskInput.value;
     const dueDate = new Date(dueDateInput.value);
 
-    // Validate that the due date is not in the past
     if (dueDate < new Date()) {
       alert("Due date cannot be in the past.");
       return;
     }
+
     createdTasks.push({
       id: Date.now(),
       text: taskText,
@@ -70,16 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     taskList.renderTaskList();
     alert("Task created successfully.");
-    createTaskForm.classList.add("hidden");
-    document.getElementById("tab").style.display = "block";
-    document.getElementById("AssignedTasks").classList.add("active");
   });
-
-  // const saveTaskEdit = document.getElementById('save-task-btn');
-  // saveTaskEdit.addEventListener('click',()=>{
-  //   document.getElementById('edit-task-form').classList.add('hidden');
-  //   alert('Unable to update tasks at the moment');
-  // });
 
   // Initial rendering
   overviewDash.overView();
@@ -89,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
   userManagement.renderUsers();
 
   // Update assigned tasks every minute to reflect time remaining
-  setInterval(assignedTasksAdmin.renderAssignedTasks, 60000);
+  setInterval(assignedTasksAdmin.renderAssignedTasks, 600000);
 
   //Admin view all tasks
   const renderAllTasks = (tasks, tableName) => {
@@ -131,16 +141,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
   renderAllTasks(tasks, allTasksTable);
-
-  const adminCreateTaskBtn = document.getElementById("createTaskBtn");
-  adminCreateTaskBtn.addEventListener("click", () => {
-    document.getElementById("tab").style.display = "none";
-    document.getElementById("AssignedTasks").classList.remove("active");
-    document.getElementById("userTasks").style.display = "none";
-    document.getElementById("createdTasks").style.display = "none";
-    createTaskForm.classList.remove("hidden");
-  });
-
   //filter tasks
   // const taskSearchInput = document.getElementById("taskSearchInput");
   // taskSearchInput.addEventListener("input", (e) => {
