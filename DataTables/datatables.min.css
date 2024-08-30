@@ -691,6 +691,7 @@ div.dt-container .dt-input {
   width: fit-content;
 }
 div.dt-container select.dt-input {
+  display:none;
   padding: 4px;
 }
 div.dt-container .dt-paging .dt-paging-button {
@@ -1589,6 +1590,9 @@ div.dts div.dt-scroll-body table,
 div.dts div.dataTables_scrollBody table {
   background-color: white;
   z-index: 2;
+}
+div.dt-container .dt-length{
+  display: none;
 }
 div.dts div.dt-length,
 div.dts div.dt-paging,

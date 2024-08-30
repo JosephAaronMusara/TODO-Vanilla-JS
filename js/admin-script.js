@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
   memberRankModule.rankMembers();
   userManagement.renderUsers();
 
-  // Update assigned tasks every minute to reflect time remaining
+  // Update assigned tasks every 10 minutes to reflect time remaining
   setInterval(assignedTasksAdmin.renderAssignedTasks, 600000);
 
   //Admin view all tasks
