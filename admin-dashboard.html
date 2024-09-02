@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="DataTables/datatables.min.css" rel="stylesheet">
-    <script src="DataTables/datatables.min.js"></script>
-
 </head>
 <body>
     <script>
@@ -45,16 +42,19 @@
 
             <section id="manage-tasks" class="content-section">
                 <h2>TASKS</h2>
+                <input class="hidden" type="text" id="search-userTasks" placeholder="Search User Tasks...">
+                <input class="hidden"  type="text" id="search-taskListTable" placeholder="Search Created Tasks...">
+                <input class="hidden"  type="text" id="search-assign-tasks" placeholder="Search Assigned Tasks...">
                 <button id="createTaskBtn">Create Task</button>
 
                 <div id="tab" class="tab">
-                    <button class="tablinks active" onclick="openTab(event, 'AssignedTasks')">
+                    <button id="assignedTasksBtnTab" class="tablinks active" onclick="openTab(event, 'AssignedTasks')">
                         Assigned Tasks
                     </button>
-                    <button class="tablinks" onclick="openTab(event, 'createdTasks')">
+                    <button id="createdTasksBtnTab" class="tablinks" onclick="openTab(event, 'createdTasks')">
                         Created Tasks
                     </button>
-                    <button class="tablinks" onclick="openTab(event, 'userTasks')">
+                    <button id="userTasksBtnTab" class="tablinks" onclick="openTab(event, 'userTasks')">
                         User Tasks
                     </button>
                 </div>
@@ -79,7 +79,6 @@
         </div>
         <div id="createdTasks" class="tabcontent">
             <table id="taskListTable">
-                <input type="text" id="search-taskListTable" placeholder="Search Created Tasks...">
                 <thead>
                     <tr>
                         <th>Task</th>
@@ -91,7 +90,6 @@
             </table>
         </div>
               <div id="AssignedTasks" class="tabcontent active">
-                <input type="text" id="search-assign-tasks" placeholder="Search Assigned Tasks...">
                 <table id="assign-tasks">
                     <thead>
                         <tr>
@@ -106,7 +104,6 @@
                 </table>
               </div>      
                     <div id="userTasks" class="tabcontent">
-                        <input type="text" id="search-userTasks" placeholder="Search User Tasks...">
                         <table id="allTasksTable">
                             <thead>
                                 <tr>

@@ -16,4 +16,24 @@ export   function filterTable(searchInputId, tableId) {
             }
         });
     });
+    const searchassignedtasks = document.getElementById('search-assign-tasks');
+    const searchtaskList = document.getElementById('search-taskListTable');
+    const searchuserTasks = document.getElementById('search-userTasks');
+    searchassignedtasks.style.display = 'block';
+  
+    document.getElementById('assignedTasksBtnTab').addEventListener('click',()=>{
+      searchassignedtasks.style.display = 'block';
+      searchtaskList.style.display = 'none';
+      searchuserTasks.style.display = 'none';
+    });
+    document.getElementById('createdTasksBtnTab').addEventListener('click',()=>{
+      searchassignedtasks.style.display = 'none';
+      searchtaskList.style.display = 'block';
+      searchuserTasks.style.display = 'none';
+    });
+    document.getElementById('userTasksBtnTab').addEventListener('click',()=>{
+      searchassignedtasks.style.display = 'none';
+      searchtaskList.style.display = 'none';
+      searchuserTasks.style.display = 'block';
+    });
 }

@@ -320,7 +320,11 @@ input[type="text"] {
   width: 100%;
   border-collapse: collapse;
 }
-.table-container input{
+#search-taskListTable,
+#search-userTasks,
+#search-assign-tasks,
+#search-manage-members,
+#search-ranked-members{
   width: 20%;
 }
 
