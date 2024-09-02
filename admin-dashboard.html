@@ -79,6 +79,7 @@
         </div>
         <div id="createdTasks" class="tabcontent">
             <table id="taskListTable">
+                <input type="text" id="search-taskListTable" placeholder="Search Created Tasks...">
                 <thead>
                     <tr>
                         <th>Task</th>
@@ -90,6 +91,7 @@
             </table>
         </div>
               <div id="AssignedTasks" class="tabcontent active">
+                <input type="text" id="search-assign-tasks" placeholder="Search Assigned Tasks...">
                 <table id="assign-tasks">
                     <thead>
                         <tr>
@@ -104,6 +106,7 @@
                 </table>
               </div>      
                     <div id="userTasks" class="tabcontent">
+                        <input type="text" id="search-userTasks" placeholder="Search User Tasks...">
                         <table id="allTasksTable">
                             <thead>
                                 <tr>
@@ -130,6 +133,7 @@
             <section id="manage-members" class="content-section">
                 <h2>Manage Members</h2>
                 <div class="table-container">
+                    <input type="text" id="search-manage-members" placeholder="Search  Members...">
                 <table id="member-management">
                     <thead>
                         <tr>
@@ -147,6 +151,7 @@
             <section id="rank-members" class="content-section">
                 <h2>Member and Tasks Statistics</h2>
                 <div class="table-container">
+                    <input type="text" id="search-ranked-members" placeholder="Search...">
                 <table id="ranked-members" style="font-size: small;">
                     <thead>
                         <tr>
@@ -209,21 +214,6 @@
         tbody.innerHTML = '';
         rows.forEach(row => tbody.appendChild(row));
         }
-        $(document).ready(function () {
-    $("#allTasksTable").DataTable();
-  });
-  $(document).ready(function () {
-    $("#taskListTable").DataTable();
-  });
-  $(document).ready(function () {
-    $("#assign-tasks").DataTable();
-  });
-  $(document).ready(function () {
-    $("#member-management").DataTable();
-  });
-  $(document).ready(function () {
-    $("#ranked-members").DataTable();
-  });
     </script>
 </body>
 </html>

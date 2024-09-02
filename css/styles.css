@@ -320,6 +320,9 @@ input[type="text"] {
   width: 100%;
   border-collapse: collapse;
 }
+.table-container input{
+  width: 20%;
+}
 
 .table-container th,
 .table-container td {
@@ -433,4 +436,26 @@ input[type="text"] {
   color: rgb(255, 11, 11);
   text-decoration: none;
   cursor: pointer;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

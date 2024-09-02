@@ -3,6 +3,8 @@ import * as assignedTasksAdmin from "../js/assignedTasksRender.js";
 import * as overviewDash from "../js/overview.js";
 import * as userManagement from "../js/renderusers.js";
 import * as taskList from "../js/taskListRender.js";
+import * as tablePaginator from "../js/tablePagination.js"
+import * as filtering from "../js/searching.js"
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("logout-btn").addEventListener("click", function () {
@@ -89,6 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     taskList.renderTaskList();
     alert("Task created successfully.");
+    createTaskModal.style.display='none';
   });
 
   // Initial rendering
@@ -141,15 +144,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
   renderAllTasks(tasks, allTasksTable);
-  //filter tasks
-  // const taskSearchInput = document.getElementById("taskSearchInput");
-  // taskSearchInput.addEventListener("input", (e) => {
-  //   e.preventDefault();
-  //   const searchValue = e.target.value.toLowerCase();
-  //   const filteredTasks = tasks.filter((task) =>
-  //     String(task.text).toLowerCase().includes(searchValue)
-  //   );
-  //   renderAllTasks(filteredTasks);
-  // });
-  // renderAllTasks(tasks);
+
+filtering.filterTable('search-assign-tasks','assign-tasks')
+filtering.filterTable('search-taskListTable','taskListTable')
+filtering.filterTable('search-userTasks','allTasksTable')
+filtering.filterTable('search-manage-members','member-management')
+filtering.filterTable('search-ranked-members','ranked-members')
+
+tablePaginator.paginateTable('taskListTable', 5);
+tablePaginator.paginateTable('assign-tasks', 5);
+tablePaginator.paginateTable('allTasksTable', 5);
+tablePaginator.paginateTable('member-management', 5);
+tablePaginator.paginateTable('ranked-members', 5);
+  
+  
 });
