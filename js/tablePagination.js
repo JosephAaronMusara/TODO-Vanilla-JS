@@ -7,7 +7,7 @@ export function paginateTable(tableId, rowsPerPage) {
     let currentPage = 1;
 
     function displayPage(page) {
-      tbody.innerHTML = ''; // Clear the table body
+      tbody.innerHTML = '';
       const start = (page - 1) * rowsPerPage;
       const end = start + rowsPerPage;
       rows.slice(start, end).forEach(row => tbody.appendChild(row));
