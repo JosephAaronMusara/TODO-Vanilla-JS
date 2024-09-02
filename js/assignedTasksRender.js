@@ -1,6 +1,7 @@
 export function renderAssignedTasks() {
   const users = JSON.parse(localStorage.getItem("users")) || [];
-  const createdTasks = JSON.parse(localStorage.getItem("createdTasks")) || [];
+  const createdTasksKey = "createdTasks";
+  const createdTasks = JSON.parse(localStorage.getItem(createdTasksKey)) || [];
   const assignTasksTable = document
     .getElementById("assign-tasks")
     .querySelector("tbody");
@@ -39,10 +40,15 @@ export function renderAssignedTasks() {
       const completeBtn = document.createElement("button");
       completeBtn.textContent = "Mark as Completed";
       completeBtn.addEventListener("click", function () {
-        task.completed = true;
-        localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
-        renderAssignedTasks();
-        alert("Task marked as completed.");
+        const confirmed = confirm(
+          'Is it really completed. This action is not reversible!'
+        );
+          if(confirmed){
+            task.completed = true;
+            localStorage.setItem(createdTasksKey, JSON.stringify(createdTasks));
+            renderAssignedTasks();
+            alert("Task marked as completed.");
+          }
       });
       if (task.completed) {
         completeBtn.disabled = true;

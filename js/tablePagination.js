@@ -45,8 +45,8 @@ export function paginateTable(tableId, rowsPerPage) {
     function updatePaginationControls() {
       const buttons = table.parentNode.querySelectorAll('.pagination button');
       buttons.forEach(button => button.disabled = false);
-      if (currentPage === 1) buttons[0].disabled = true; // Disable 'Previous' button
-      if (currentPage === pageCount) buttons[buttons.length - 1].disabled = true; // Disable 'Next' button
+      if (currentPage === 1) buttons[0].disabled = true;
+      if (currentPage === pageCount) buttons[buttons.length - 1].disabled = true;
     }
 
     createPaginationControls();

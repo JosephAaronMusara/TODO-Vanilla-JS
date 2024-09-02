@@ -1,3 +1,4 @@
+import * as tablePaginator from "../js/tablePagination.js"
 export function renderUsers() {
   const usersKey = "users";
   const users = JSON.parse(localStorage.getItem(usersKey)) || [];
@@ -34,13 +35,16 @@ export function renderUsers() {
           localStorage.setItem(usersKey, JSON.stringify(users));
           approveBtn.textContent = "Deactivate";
           alert(`Account for ${user.fullName} successfully activated!`);
-          location.reload();
+          userManagementTable.innerHTML='';
+          tablePaginator.paginateTable('member-management', 5);
+          renderUsers();
         } else {
           user.approved = false;
           localStorage.setItem(usersKey, JSON.stringify(users));
           approveBtn.textContent = "Activate";
           alert(`Account for ${user.fullName} successfully deactivated!`);
-          location.reload();
+          userManagementTable.innerHTML='';
+          renderUsers();
         }
       });
 
